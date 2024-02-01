@@ -3,7 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import React from "react";
 
-export default function IdeaPage() {
+interface IdeaPageProps {
+	setProjectIdea: ({}) => void;
+}
+
+export default function IdeaPage({ setProjectIdea }: IdeaPageProps) {
 	// USER INPUT VALUES
 	const [interests, setInterests] = useState("");
 	const [skills, setSkills] = useState("");
@@ -20,20 +24,6 @@ export default function IdeaPage() {
 	const handleChangeSkills = (event: { target: HTMLInputElement }) => {
 		setSkills(event.target.value);
 	};
-
-	// PROJECT IDEA RESULT
-	type Project = {
-		title: string;
-		description: string;
-		features?: string[];
-		requirements?: string[];
-	};
-	const [projectIdea, setProjectIdea] = useState<Project>({
-		title: "",
-		description: "",
-		features: [],
-		requirements: [],
-	});
 
 	// OPEN AI API REQUESTS
 	const getRandomProjectIdea = async () => {
@@ -117,7 +107,7 @@ export default function IdeaPage() {
 				<button onClick={getCustomProjectIdea}>CUSTOM IDEA</button>
 				<button onClick={getRandomProjectIdea}>RANDOM IDEA</button>
 			</div>
-			{projectIdea && (
+			{/* {projectIdea && (
 				<div>
 					<div>Project Title: {projectIdea.title}</div>
 
@@ -134,7 +124,7 @@ export default function IdeaPage() {
 						</ul>
 					)} */}
 				</div>
-			)}
+			)} */}
 		</div>
 	);
 }
