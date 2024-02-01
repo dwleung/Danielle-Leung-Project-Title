@@ -4,8 +4,24 @@ import axios from "axios";
 import React from "react";
 
 export default function IdeaPage() {
+	// USER INPUT VALUES
 	const [interests, setInterests] = useState("");
 	const [skills, setSkills] = useState("");
+
+	// RECORD CHAT HISTORY TO IMPROVE RANDOMNESS OF RESPONSE
+	const [chatHistory, setChatHistory] = useState<object[]>([]);
+	const [customChatHistory, setCustomChatHistory] = useState<object[]>([]);
+
+	// UPDATE STATE FOR INPUT ELEMENTS
+	const handlechangeInterests = (event: { target: HTMLInputElement }) => {
+		setInterests(event.target.value);
+	};
+
+	const handleChangeSkills = (event: { target: HTMLInputElement }) => {
+		setSkills(event.target.value);
+	};
+
+	// PROJECT IDEA RESULT
 	type Project = {
 		title: string;
 		description: string;
@@ -19,29 +35,22 @@ export default function IdeaPage() {
 		requirements: [],
 	});
 
-	const [chatHistory, setChatHistory] = useState<object[]>([]);
-
-	const handlechangeInterests = (event: { target: HTMLInputElement }) => {
-		setInterests(event.target.value);
-		console.log(interests);
-	};
-
-	const handleChangeSkills = (event: { target: HTMLInputElement }) => {
-		setSkills(event.target.value);
-		console.log(skills);
-	};
-
+	// OPEN AI API REQUESTS
 	const getRandomProjectIdea = async () => {
-		setTimeout(() => {
-			console.log(chatHistory);
-		}, 2000);
+		const history = [
+			...chatHistory,
+			{
+				role: "user",
+				content: "Suggest a different software engineering project.",
+			},
+		];
 
 		const responseString = await axios.post(
 			`http://localhost:8080/openai/`,
-			chatHistory
+			history
 		);
 		setChatHistory([
-			...chatHistory,
+			...history,
 			{
 				role: "assistant",
 				content: responseString.data.content,
@@ -54,17 +63,30 @@ export default function IdeaPage() {
 	};
 
 	const getCustomProjectIdea = async () => {
+		const history = [
+			...customChatHistory,
+			{
+				role: "user",
+				content: `My interests are ${interests} and the skills I want to employ are ${skills}`,
+			},
+		];
+		console.log("Custom Step 1: ", history);
 		const responseString = await axios.post(
 			`http://localhost:8080/openai/custom`,
-			{
-				interests: { interests },
-				skills: { skills },
-			}
+			history
 		);
 
-		console.log(responseString.data.content);
-		console.log(typeof responseString.data.content);
+		setCustomChatHistory([
+			...history,
+			{
+				role: "assistant",
+				content: responseString.data.content,
+			},
+		]);
+		console.log("Custom Step 2: ", customChatHistory);
+
 		const responseObject = JSON.parse(responseString.data.content);
+		console.log(responseObject);
 		setProjectIdea(responseObject);
 	};
 
@@ -102,13 +124,15 @@ export default function IdeaPage() {
 					<div>
 						Project Description: {projectIdea.description}
 					</div>
-					{/* {projectIdea && (projectIdea.requirements.map((requirement)=>{
-                              <p>{requirement}</p>
-                         }))} */}
-					<div>
-						{" "}
-						Project Features: {projectIdea.requirements}
-					</div>
+					<div>Project Features: {projectIdea.requirements}</div>
+					{/* {projectIdea.requirements.length && (
+						<ul>
+							Project Features:
+							<li>{projectIdea.requirements[0]}</li>
+							<li>{projectIdea.requirements[1]}</li>
+							<li>{projectIdea.requirements[2]}</li>
+						</ul>
+					)} */}
 				</div>
 			)}
 		</div>

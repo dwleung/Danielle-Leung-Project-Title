@@ -1,0 +1,30 @@
+@use "./mixins" as *;
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+//GLOBALLY AVAILABLE ELEMENTS
+.button {
+	width: 100%;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+		rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+	border-radius: 0.25rem;
+	height: 2.5rem;
+
+	@include tablet {
+		width: 6.5rem;
+		height: 4.5rem;
+	}
+}
+
+.input {
+	width: 100%;
+	height: fit-content;
+
+	@include tablet {
+		width: 6.5rem;
+	}
+}
