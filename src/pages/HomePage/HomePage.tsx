@@ -1,6 +1,9 @@
 import react from "react";
 import Typewriter from "typewriter-effect";
 import "./HomePage.scss";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import arrowIcon from "../../assets/icons/arrow.svg";
 
 export default function HomePage() {
 	const options = {
@@ -42,6 +45,11 @@ export default function HomePage() {
 					We'll do the idea work, so you can start building.
 				</p>
 			</div>
+			<img
+				className="icon home__image"
+				src={arrowIcon}
+				alt="button with arrow pointing downwards"
+			/>
 		</div>
 	);
 }

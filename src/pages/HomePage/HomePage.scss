@@ -9,26 +9,45 @@
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
+	text-align: center;
 	@include content-width;
 
 	&__title {
 		font-size: 5rem;
 		font-weight: 600;
+		color: $primary-dark;
 	}
 
 	&__title-cursor {
 		font-size: 5rem;
 		font-weight: 600;
-		color: cornflowerblue;
+		color: $secondary-accessory;
 	}
 
 	&__tagline {
 		font-size: 1.25rem;
 		font-weight: 400;
-		margin-top: 1rem;
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 0.2rem solid $primary-accessory;
+		width: 100%;
+		color: $primary-dark;
+
+		@include tablet {
+			width: 70%;
+		}
 
 		&--bold {
 			font-weight: 600;
+		}
+	}
+
+	&__image {
+		position: absolute;
+		bottom: 4rem;
+
+		@include desktop {
+			display: none;
 		}
 	}
 }

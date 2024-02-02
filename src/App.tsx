@@ -6,6 +6,8 @@ import HomePage from "./pages/HomePage/HomePage";
 import IdeaPage from "./pages/GenerateIdeaPage/GenerateIdeaPage";
 import IdeaDetailsPage from "./pages/IdeaDetailsPage/IdeaDetailsPage";
 import { Project } from "./utils/interfaces";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
 	// PROJECT IDEA RESULT
@@ -18,6 +20,7 @@ function App() {
 
 	return (
 		<BrowserRouter>
+			<Header />
 			<Routes>
 				<Route path="/" element={<HomePage />} />
 				<Route
@@ -29,6 +32,7 @@ function App() {
 					element={<IdeaDetailsPage projectIdea={projectIdea} />}
 				/>
 			</Routes>
+			<Footer />
 		</BrowserRouter>
 	);
 }
