@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import UserProfile from "../../components/UserProfile/UserProfile";
 
 export default function UserPage() {
 	const loginUrl = `${process.env.REACT_APP_API_URL}login`;
@@ -98,7 +99,7 @@ export default function UserPage() {
 
 	return (
 		<div className="authPage">
-			{/* Content: Profile, User homepage? */}
+			<UserProfile />
 		</div>
 	);
 }
