@@ -8,6 +8,7 @@ import IdeaDetailsPage from "./pages/IdeaDetailsPage/IdeaDetailsPage";
 import { Project } from "./utils/interfaces";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import UserPage from "./pages/UserPage/UserPage";
 
 function App() {
 	// PROJECT IDEA RESULT
@@ -31,6 +32,7 @@ function App() {
 					path="/idea/details"
 					element={<IdeaDetailsPage projectIdea={projectIdea} />}
 				/>
+				<Route path="/user" element={<UserPage />} />
 			</Routes>
 			<Footer />
 		</BrowserRouter>

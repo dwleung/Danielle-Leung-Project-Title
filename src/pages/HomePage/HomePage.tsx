@@ -1,8 +1,6 @@
 import react from "react";
 import Typewriter from "typewriter-effect";
 import "./HomePage.scss";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import arrowIcon from "../../assets/icons/arrow.svg";
 
 export default function HomePage() {
