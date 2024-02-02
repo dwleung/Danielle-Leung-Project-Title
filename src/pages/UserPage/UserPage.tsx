@@ -27,7 +27,7 @@ export default function UserPage() {
 		}
 	};
 
-	const handleLogin = async (e) => {
+	const handleLogin = async (e: any) => {
 		e.preventDefault();
 		try {
 			const response = await axios.post(loginUrl, {

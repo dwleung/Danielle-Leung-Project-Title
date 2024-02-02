@@ -1,0 +1,34 @@
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+
+.home {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	@include content-width;
+
+	&__title {
+		font-size: 5rem;
+		font-weight: 600;
+	}
+
+	&__title-cursor {
+		font-size: 5rem;
+		font-weight: 600;
+		color: cornflowerblue;
+	}
+
+	&__tagline {
+		font-size: 1.25rem;
+		font-weight: 400;
+		margin-top: 1rem;
+
+		&--bold {
+			font-weight: 600;
+		}
+	}
+}

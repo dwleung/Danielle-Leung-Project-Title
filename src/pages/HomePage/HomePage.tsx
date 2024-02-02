@@ -1,15 +1,17 @@
 import react from "react";
 import Typewriter from "typewriter-effect";
+import "./HomePage.scss";
 
 export default function HomePage() {
 	const options = {
 		loop: true,
 		cursor: "|",
-		wrapperClassName: "Typewriter_wrapper",
+		wrapperClassName: "home__title",
+		cursorClassName: "home__title-cursor",
 	};
 
 	return (
-		<>
+		<div className="home">
 			<Typewriter
 				options={options}
 				onInit={(typewriter: any) => {
@@ -32,6 +34,14 @@ export default function HomePage() {
 						.start();
 				}}
 			/>
-		</>
+			<div className="home__tagline">
+				<p>
+					Sometimes, coming up with the idea is the hardest part.
+				</p>
+				<p className="home__tagline--bold">
+					We'll do the idea work, so you can start building.
+				</p>
+			</div>
+		</div>
 	);
 }
