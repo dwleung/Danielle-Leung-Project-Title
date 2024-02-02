@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import UserProfile from "../../components/UserProfile/UserProfile";
+import "./UserPage.scss";
 
 export default function UserPage(): JSX.Element {
 	const loginUrl = `${process.env.REACT_APP_API_URL}user/login`;
@@ -52,25 +53,33 @@ export default function UserPage(): JSX.Element {
 			<div className="signup form">
 				<h1 className="signup__title">SIGN UP</h1>
 				<form className="signup__form" onSubmit={handleSignup}>
-					<input
-						className="form__input signup__input"
-						type="text"
-						name="username"
-						placeholder="Enter a username"
-					/>
-					<input
-						className="form__input signup__input"
-						type="text"
-						name="name"
-						placeholder="Enter a name"
-					/>
-					<input
-						className="form__input signup__input"
-						type="password"
-						name="password"
-						placeholder="Enter a password"
-					/>
-
+					<label>
+						NAME
+						<input
+							className="form__input signup__input"
+							type="text"
+							name="name"
+							placeholder="Enter a name"
+						/>
+					</label>
+					<label>
+						CREATE A USERNAME
+						<input
+							className="form__input signup__input"
+							type="text"
+							name="username"
+							placeholder="Enter a username"
+						/>
+					</label>
+					<label>
+						CREATE A PASSWORD
+						<input
+							className="form__input signup__input"
+							type="password"
+							name="password"
+							placeholder="Enter a password"
+						/>
+					</label>
 					<button
 						type="submit"
 						className="button signup__button"
@@ -90,18 +99,24 @@ export default function UserPage(): JSX.Element {
 					<label className="label--error">{errorMessage}</label>
 				)}
 				<form className="login__form" onSubmit={handleLogin}>
-					<input
-						className="form__input login__input"
-						type="text"
-						name="username"
-						placeholder="Enter your username"
-					/>
-					<input
-						className="form__input login__input"
-						type="password"
-						name="password"
-						placeholder="Enter your password"
-					/>
+					<label>
+						ENTER YOUR USERNAME
+						<input
+							className="form__input login__input"
+							type="text"
+							name="username"
+							placeholder="Enter your username"
+						/>
+					</label>
+					<label>
+						enter your password
+						<input
+							className="form__input login__input"
+							type="password"
+							name="password"
+							placeholder="Enter your password"
+						/>
+					</label>
 					<button type="submit">Log In</button>
 				</form>
 			</div>
