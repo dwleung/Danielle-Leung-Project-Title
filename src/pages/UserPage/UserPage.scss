@@ -2,3 +2,29 @@
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/variables" as *;
+
+.signup {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	height: 100%;
+	margin: 0 auto;
+
+	&__title {
+		@include page-title;
+	}
+
+	&__form {
+		margin: 1rem;
+		display: flex;
+		flex: column nowrap;
+	}
+
+	&__input {
+		margin-bottom: 1rem;
+	}
+}
+
+.login {
+	@include page-title;
+}

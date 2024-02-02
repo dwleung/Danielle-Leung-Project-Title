@@ -2,8 +2,10 @@ import react from "react";
 import Typewriter from "typewriter-effect";
 import "./HomePage.scss";
 import arrowIcon from "../../assets/icons/arrow.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+	const navigate = useNavigate();
 	const options = {
 		loop: true,
 		cursor: "|",
@@ -47,6 +49,9 @@ export default function HomePage() {
 				className="icon home__image"
 				src={arrowIcon}
 				alt="button with arrow pointing downwards"
+				onClick={() => {
+					navigate("/idea");
+				}}
 			/>
 		</div>
 	);

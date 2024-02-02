@@ -21,20 +21,26 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<Header />
-			<Routes>
-				<Route path="/" element={<HomePage />} />
-				<Route
-					path="/idea"
-					element={<IdeaPage setProjectIdea={setProjectIdea} />}
-				/>
-				<Route
-					path="/idea/details"
-					element={<IdeaDetailsPage projectIdea={projectIdea} />}
-				/>
-				<Route path="/user" element={<UserPage />} />
-			</Routes>
-			<Footer />
+			<div className="main">
+				<Header />
+				<Routes>
+					<Route path="/" element={<HomePage />} />
+					<Route
+						path="/idea"
+						element={
+							<IdeaPage setProjectIdea={setProjectIdea} />
+						}
+					/>
+					<Route
+						path="/idea/details"
+						element={
+							<IdeaDetailsPage projectIdea={projectIdea} />
+						}
+					/>
+					<Route path="/user" element={<UserPage />} />
+				</Routes>
+				<Footer />
+			</div>
 		</BrowserRouter>
 	);
 }
