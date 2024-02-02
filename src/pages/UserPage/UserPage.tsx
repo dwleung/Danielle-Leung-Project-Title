@@ -102,8 +102,8 @@ export default function UserPage(): JSX.Element {
 						name="password"
 						placeholder="Enter your password"
 					/>
+					<button type="submit">Log In</button>
 				</form>
-				<button type="submit">Log In</button>
 			</div>
 		);
 	}
