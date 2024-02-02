@@ -2,9 +2,10 @@ import "./GenerateIdeaPage.scss";
 import { useState } from "react";
 import axios from "axios";
 import React from "react";
+import { Project } from "../../utils/interfaces";
 
 interface IdeaPageProps {
-	setProjectIdea: ({}) => void;
+	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
 }
 
 export default function IdeaPage({ setProjectIdea }: IdeaPageProps) {
@@ -107,24 +108,6 @@ export default function IdeaPage({ setProjectIdea }: IdeaPageProps) {
 				<button onClick={getCustomProjectIdea}>CUSTOM IDEA</button>
 				<button onClick={getRandomProjectIdea}>RANDOM IDEA</button>
 			</div>
-			{/* {projectIdea && (
-				<div>
-					<div>Project Title: {projectIdea.title}</div>
-
-					<div>
-						Project Description: {projectIdea.description}
-					</div>
-					<div>Project Features: {projectIdea.requirements}</div>
-					{/* {projectIdea.requirements.length && (
-						<ul>
-							Project Features:
-							<li>{projectIdea.requirements[0]}</li>
-							<li>{projectIdea.requirements[1]}</li>
-							<li>{projectIdea.requirements[2]}</li>
-						</ul>
-					)} */}
-				</div>
-			)} */}
 		</div>
 	);
 }
