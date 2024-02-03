@@ -44,7 +44,10 @@ function App() {
 							/>
 						}
 					/>
-					<Route path="/user" element={<UserPage />} />
+					<Route
+						path="/user"
+						element={<UserPage baseUrl={baseUrl} />}
+					/>
 				</Routes>
 				<Footer />
 			</div>

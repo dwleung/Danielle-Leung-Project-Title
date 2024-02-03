@@ -5,4 +5,9 @@ interface Project {
 	requirements: string[];
 }
 
-export type { Project };
+interface UserComponentProps {
+	baseUrl: string | undefined;
+	setState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export type { Project, UserComponentProps };

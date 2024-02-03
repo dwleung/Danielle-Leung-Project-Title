@@ -1,0 +1,24 @@
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+
+.login {
+	display: flex;
+	flex-direction: column;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
+
+	&__title {
+		@include page-title;
+		border-bottom: 0.2rem solid $primary-accessory;
+
+		&--inactive {
+			border-bottom: none;
+		}
+	}
+}

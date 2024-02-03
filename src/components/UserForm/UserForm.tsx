@@ -1,5 +1,6 @@
 import "./UserForm.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface FormProps {
 	titleText: string;
@@ -9,6 +10,8 @@ interface FormProps {
 }
 
 export default function UserForm(props: FormProps) {
+	const navigate = useNavigate();
+
 	return (
 		<div className="signup form">
 			<h1 className="signup__title">{props.titleText}</h1>
@@ -44,6 +47,12 @@ export default function UserForm(props: FormProps) {
 				</label>
 				<button type="submit" className="button signup__button">
 					{props.buttonText}
+				</button>
+				<button
+					className="button button--cancel"
+					onClick={() => navigate(-1)}
+				>
+					CANCEL
 				</button>
 			</form>
 		</div>
