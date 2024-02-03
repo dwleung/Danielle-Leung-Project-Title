@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import UserProfile from "../../components/UserProfile/UserProfile";
 import "./UserPage.scss";
+import UserForm from "../../components/UserForm/UserForm";
 
 export default function UserPage(): JSX.Element {
 	const loginUrl = `${process.env.REACT_APP_API_URL}user/login`;
@@ -37,7 +38,7 @@ export default function UserPage(): JSX.Element {
 				// bcrypt hash
 				password: e.target.password.value,
 			});
-			localStorage.setItem("JWT token", response.data.token);
+			sessionStorage.setItem("JWT token", response.data.token);
 			setIsLoggedIn(true);
 			setIsLoginError(false);
 			setErrorMessage("");
@@ -50,85 +51,39 @@ export default function UserPage(): JSX.Element {
 
 	function renderSignup(): JSX.Element {
 		return (
-			<div className="signup form">
-				<h1 className="signup__title">SIGN UP</h1>
-				<form className="signup__form" onSubmit={handleSignup}>
-					<label>
-						NAME
-						<input
-							className="form__input signup__input"
-							type="text"
-							name="name"
-							placeholder="Enter a name"
-						/>
-					</label>
-					<label>
-						CREATE A USERNAME
-						<input
-							className="form__input signup__input"
-							type="text"
-							name="username"
-							placeholder="Enter a username"
-						/>
-					</label>
-					<label>
-						CREATE A PASSWORD
-						<input
-							className="form__input signup__input"
-							type="password"
-							name="password"
-							placeholder="Enter a password"
-						/>
-					</label>
-					<button
-						type="submit"
-						className="button signup__button"
-					>
-						Sign Up
-					</button>
-				</form>
+			<div>
+				<UserForm
+					titleText="SIGN UP"
+					onSubmitFn={handleSignup}
+					buttonText="SIGN UP"
+					isSignUpForm={true}
+				/>
 			</div>
 		);
 	}
 
 	function renderLogin(): JSX.Element {
 		return (
-			<div className="login">
-				<h1 className="login__title">LOG IN</h1>
+			<div>
 				{isLoginError && (
 					<label className="label--error">{errorMessage}</label>
 				)}
-				<form className="login__form" onSubmit={handleLogin}>
-					<label>
-						ENTER YOUR USERNAME
-						<input
-							className="form__input login__input"
-							type="text"
-							name="username"
-							placeholder="Enter your username"
-						/>
-					</label>
-					<label>
-						enter your password
-						<input
-							className="form__input login__input"
-							type="password"
-							name="password"
-							placeholder="Enter your password"
-						/>
-					</label>
-					<button type="submit">Log In</button>
-				</form>
+				<UserForm
+					titleText="LOG IN"
+					onSubmitFn={handleLogin}
+					buttonText="LOG IN"
+					isSignUpForm={false}
+				/>
 			</div>
 		);
 	}
 
-	if (!isSignedUp) {
-		return renderSignup();
-	}
-
 	if (!isLoggedIn) {
 		return renderLogin();
+	}
+
+	if (!isSignedUp) {
+		return renderSignup();
 	}
 
 	return (

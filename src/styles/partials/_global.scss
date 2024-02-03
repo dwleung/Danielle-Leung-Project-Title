@@ -1,4 +1,6 @@
 @use "./mixins" as *;
+@use "./variables" as *;
+@use "./typography" as *;
 
 * {
 	box-sizing: border-box;
@@ -9,14 +11,19 @@
 //GLOBALLY AVAILABLE ELEMENTS
 .button {
 	width: 100%;
+	outline: none;
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
 		rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-	border-radius: 0.25rem;
+	border-radius: 1.25rem;
+	border: none;
+	background-color: $primary-accessory;
+	color: $white;
+	font-weight: 600;
 	height: 2.5rem;
 
 	@include tablet {
 		width: 6.5rem;
-		height: 4.5rem;
+		height: 2.5rem;
 	}
 }
 
@@ -26,8 +33,21 @@
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
 		rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 	border-radius: 0.25rem;
+	border: 0.063rem solid $primary-light;
 
 	@include tablet {
 		width: 6.5rem;
 	}
+
+	&--error {
+		border: 0.063rem solid $primary-accessory;
+	}
+}
+
+label {
+	display: block;
+	margin-bottom: 0.06rem;
+	color: $secondary-dark;
+	font-size: 0.75rem;
+	font-weight: 400;
 }

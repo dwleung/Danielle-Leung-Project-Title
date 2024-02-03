@@ -3,6 +3,18 @@
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/variables" as *;
 
-.authPage {
+.form {
 	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	height: 100%;
+	margin: 1rem auto;
+
+	&__title {
+		@include page-title;
+	}
+
+	&__input {
+		margin-bottom: 1rem;
+	}
 }

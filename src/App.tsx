@@ -14,6 +14,7 @@ function App() {
 	// PROJECT IDEA RESULT
 
 	const [projectIdea, setProjectIdea] = useState<Project>({
+		id: "",
 		title: "",
 		description: "",
 		requirements: [],

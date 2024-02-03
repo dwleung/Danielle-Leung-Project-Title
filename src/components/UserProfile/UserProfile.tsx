@@ -15,8 +15,8 @@ export default function UserProfile() {
 		name: "",
 	});
 	const [errorMessage, setErrorMessage] = useState("");
-	const token = localStorage.getItem("JWT token");
 
+	const token: string | null = sessionStorage.getItem("JWT token");
 	useEffect(() => {
 		if (!token) {
 			return;
@@ -54,6 +54,9 @@ export default function UserProfile() {
 	return (
 		<div className="profile">
 			<h2>Welcome back, {userInfo.name}</h2>
+			{errorMessage && (
+				<div className="profile__error-message">{errorMessage}</div>
+			)}
 			<div>
 				<h3>Prompts</h3>
 				{/* Map thought array of prompts
@@ -81,6 +84,7 @@ export default function UserProfile() {
                     
                     */}
 			</div>
+			<button>LOG OUT</button>
 		</div>
 	);
 }

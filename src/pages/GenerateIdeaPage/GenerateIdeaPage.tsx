@@ -36,6 +36,12 @@ export default function IdeaPage({ setProjectIdea }: IdeaPageProps) {
 			},
 		];
 
+		if (history.length > 10) {
+			for (let i = 0; history.length > 9; i++) {
+				history.slice(0, 1);
+			}
+		}
+
 		const responseString = await axios.post(
 			`http://localhost:8080/openai/`,
 			history
