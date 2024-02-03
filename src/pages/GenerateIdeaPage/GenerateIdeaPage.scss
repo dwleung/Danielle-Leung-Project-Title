@@ -2,3 +2,24 @@
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/variables" as *;
+
+.idea {
+	&__form {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		height: 100%;
+		margin: 1rem auto;
+
+		&__input-wrapper {
+			@include page-title;
+		}
+
+		&__input-question {
+		}
+
+		&__input {
+			margin-bottom: 1rem;
+		}
+	}
+}

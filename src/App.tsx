@@ -12,7 +12,6 @@ import UserPage from "./pages/UserPage/UserPage";
 
 function App() {
 	// PROJECT IDEA RESULT
-
 	const [projectIdea, setProjectIdea] = useState<Project>({
 		id: "",
 		title: "",
