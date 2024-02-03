@@ -18,6 +18,7 @@ function App() {
 		description: "",
 		requirements: [],
 	});
+	const baseUrl: string | undefined = process.env.REACT_APP_API_URL;
 
 	return (
 		<BrowserRouter>
@@ -28,13 +29,19 @@ function App() {
 					<Route
 						path="/idea"
 						element={
-							<IdeaPage setProjectIdea={setProjectIdea} />
+							<IdeaPage
+								setProjectIdea={setProjectIdea}
+								baseUrl={baseUrl}
+							/>
 						}
 					/>
 					<Route
 						path="/idea/details"
 						element={
-							<IdeaDetailsPage projectIdea={projectIdea} />
+							<IdeaDetailsPage
+								projectIdea={projectIdea}
+								baseUrl={baseUrl}
+							/>
 						}
 					/>
 					<Route path="/user" element={<UserPage />} />

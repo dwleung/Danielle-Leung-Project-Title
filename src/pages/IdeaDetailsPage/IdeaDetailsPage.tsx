@@ -1,27 +1,74 @@
 import { Project } from "../../utils/interfaces";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 interface detailsPageProps {
 	projectIdea: Project;
+	baseUrl: string | undefined;
 }
 
-export default function IdeaDetailsPage({ projectIdea }: detailsPageProps) {
-	const interests = localStorage.getItem("interests");
-	const skills = localStorage.getItem("skills");
-	const toggles = localStorage.getItem("toggles");
+// 	const interestsArray = interests.split(",");
+// console.log("Interests Array: ", interestsArray);
+// const skillsArray = skills.split(",");
+// console.log("Skills Array: ", skillsArray);
+
+export default function IdeaDetailsPage({
+	projectIdea,
+	baseUrl,
+}: detailsPageProps) {
+	const [promptButtonText, setPromptButtonText] = useState("SAVE");
+
+	const interests = localStorage.getItem("Interests");
+	const skills = localStorage.getItem("Skills");
+	const toggles = localStorage.getItem("Toggles");
+	const { userId } = useParams();
+
+	const navigate = useNavigate();
+
+	// SAVE PROMPTS TO PROFILE
+	const savePrompts = async () => {
+		if (!userId) {
+			navigate("/user");
+			return;
+		}
+
+		try {
+			const response = await axios.post(
+				`${baseUrl}user/${userId}/prompts`,
+				{
+					interests: interests,
+					skills: skills,
+					toggles: toggles,
+				}
+			);
+			console.log(response.data);
+			setPromptButtonText("SAVED!");
+		} catch (error) {
+			console.log(`Unable to save prompts to user profile: ${error}`);
+		}
+	};
 
 	return (
-		<>
+		<section className="idea-details-page">
 			<div className="prompt">
+				<h3>Prompts</h3>
 				You chose to customize your idea with:
 				<div>
-					Interests:
+					<h4>Interests:</h4>
 					<p>{interests}</p>
 				</div>
 				<div>
-					Skills:
+					<h4>Skills:</h4>
 					<p>{skills}</p>
 					<p>{toggles}</p>
 				</div>
+				<button
+					className="button prompt__button"
+					onClick={savePrompts}
+				>
+					{promptButtonText}
+				</button>
 			</div>
 
 			<div className="details">
@@ -57,6 +104,6 @@ export default function IdeaDetailsPage({ projectIdea }: detailsPageProps) {
 					</li>
 				</ul>
 			</div>
-		</>
+		</section>
 	);
 }

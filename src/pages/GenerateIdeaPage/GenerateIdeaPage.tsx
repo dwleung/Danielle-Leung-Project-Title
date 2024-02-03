@@ -7,11 +7,10 @@ import Toggle from "../../components/Toggle/Toggle";
 
 interface IdeaPageProps {
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
+	baseUrl: string | undefined;
 }
 
-const baseUrl = process.env.REACT_APP_API_URL;
-
-export default function IdeaPage({ setProjectIdea }: IdeaPageProps) {
+export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 	// USER INPUT VALUES
 	const [interests, setInterests] = useState("");
 	const [skills, setSkills] = useState("");
@@ -54,27 +53,10 @@ export default function IdeaPage({ setProjectIdea }: IdeaPageProps) {
 
 	// DATABASE POST REQUESTS
 
-	const savePrompts = async () => {
-		const interestsArray = interests.split(",");
-		console.log("Interests Array: ", interestsArray);
-		const skillsArray = skills.split(",");
-		console.log("Skills Array: ", skillsArray);
-
+	const savePrompts = () => {
 		localStorage.setItem("Interests", interests);
 		localStorage.setItem("Skills", skills);
 		localStorage.setItem("Toggles", toggles.toString());
-
-		try {
-			const response = await axios.post(`${baseUrl}user/prompts`, {
-				interests: interestsArray,
-				skills: skillsArray,
-				toggles: toggles,
-			});
-			console.log(response.data);
-			sessionStorage.setItem("Prompts", response.data);
-		} catch (error) {
-			console.log("Unable to save prompts to user profile");
-		}
 	};
 
 	// OpenAI API REQUESTS //
