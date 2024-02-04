@@ -48,9 +48,12 @@ export default function UserPage({
 			setErrorMessage("");
 			console.log("You've successfully logged in!");
 			navigate("/user");
-		} catch (error) {
+		} catch (error: any) {
+			console.log(error);
 			setIsLoginError(true);
-			setErrorMessage(`Unable to login: ${error}`);
+			setErrorMessage(
+				`Unable to login: ${error.response.data.message}`
+			);
 		}
 	};
 
