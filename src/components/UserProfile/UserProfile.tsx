@@ -45,9 +45,9 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 					id: response.data.id,
 					name: response.data.name,
 				});
-			} catch (error) {
+			} catch (error: any) {
 				setErrorMessage(
-					`There was an issue getting your profile: ${error}`
+					`There was an issue getting your profile: ${error.response.data.message}`
 				);
 			}
 		};

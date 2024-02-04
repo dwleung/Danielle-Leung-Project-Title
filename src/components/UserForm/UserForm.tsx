@@ -1,5 +1,6 @@
 import "./UserForm.scss";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface FormProps {
 	onSubmitFn: (e: any) => void;
@@ -9,6 +10,39 @@ interface FormProps {
 
 export default function UserForm(props: FormProps) {
 	const navigate = useNavigate();
+	// 	const [values, setValues] = useState({})
+	// 	const [errors, setErrors] = useState<string[]>([]);
+	// 	const [touched,setTouched] = useState(false);
+
+	// 	//change event handler
+	// 	const handleChange = (e) =>{
+	// 		const {name, value: newValue,type} = e.target;
+	// 		setValues({
+	// 			...values,
+	// 			[name]: value,
+	// 		})
+	// 	}
+
+	// 	//check passwords equal each other
+	// 	//disable submit button if there are form errors
+	// const nameValidation = (fieldName, fieldValue) =>{
+	// 	if (fieldValue.trim()=== ""){
+	// 		return `${fieldName} is required`;
+	// 	}
+	// 	if (fieldValue.trim().length < 3) {
+	// 		return `${fieldName} needs to be at least 3 characters`
+	// 	}
+	// }
+	// const passwordCheck = (password, repeatPassword) => {
+	// 	if (repeatPassword !== password) {
+	// 		return `Passwords do not match`
+	// 	}
+	// }
+
+	// const validate ={
+	// 	name: name => nameValidation('name', name);
+
+	// }
 
 	return (
 		<div className="form-main">
