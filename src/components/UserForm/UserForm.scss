@@ -3,12 +3,15 @@
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/variables" as *;
 
+.form-main {
+	height: 100%;
+}
 .form {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	height: 100%;
-	margin: 1rem auto;
+	margin: 1rem auto 0;
 
 	&__title {
 		@include page-title;

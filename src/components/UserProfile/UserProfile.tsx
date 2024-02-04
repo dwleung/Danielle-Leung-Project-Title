@@ -99,7 +99,7 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
                     */}
 			</div>
 			<div className="profile__container">
-				<h3 className="profil__subheader">"My" Ideas</h3>
+				<h3 className="profile__subheader">"My" Ideas</h3>
 				{/* map through array of ideas 
                     {ideas.map((idea)=>{
                          return (
