@@ -9,8 +9,8 @@ import { Project } from "./utils/interfaces";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import UserPage from "./pages/UserPage/UserPage";
-import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
 	// PROJECT IDEA RESULT
@@ -22,8 +22,8 @@ function App() {
 	});
 	const baseUrl: string | undefined = process.env.REACT_APP_API_URL;
 
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isSignedUp, setIsSignedUp] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	return (
 		<BrowserRouter>
@@ -50,33 +50,34 @@ function App() {
 						}
 					/>
 					<Route
-						path="/user"
+						path="/user/login"
 						element={
 							<UserPage
 								baseUrl={baseUrl}
-								isLoggedIn={isLoggedIn}
 								isSignedUp={isSignedUp}
-								setIsLoggedIn={setIsLoggedIn}
 								setIsSignedUp={setIsSignedUp}
+								isLoggedIn={isLoggedIn}
+								setIsLoggedIn={setIsLoggedIn}
 							/>
 						}
 					/>
 
 					<Route
-						path="user/login"
-						element={
-							<Login
-								baseUrl={baseUrl}
-								setState={setIsLoggedIn}
-							/>
-						}
-					/>
-					<Route
-						path="user/signup"
+						path="/user/signup"
 						element={
 							<Signup
 								baseUrl={baseUrl}
 								setState={setIsSignedUp}
+							/>
+						}
+					/>
+
+					<Route
+						path="/user"
+						element={
+							<UserProfile
+								baseUrl={baseUrl}
+								setState={setIsLoggedIn}
 							/>
 						}
 					/>

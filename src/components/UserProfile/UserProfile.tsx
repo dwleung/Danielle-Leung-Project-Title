@@ -4,6 +4,7 @@ import axios from "axios";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
 import { UserComponentProps } from "../../utils/interfaces";
+import "./UserProfile.scss";
 
 interface UserInfo {
 	id: number | undefined;
@@ -12,30 +13,33 @@ interface UserInfo {
 	// ideas: object[]
 }
 
-export default function UserProfile({ setState }: UserComponentProps) {
+export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [userInfo, setUserInfo] = useState<UserInfo>({
 		id: undefined,
 		name: "",
 	});
 	const [errorMessage, setErrorMessage] = useState("");
+	const navigate = useNavigate();
 
 	const token: string | null = sessionStorage.getItem("JWT token");
-	useEffect(() => {
+	const checkToken = () => {
 		if (!token) {
-			return;
+			navigate("/user/login");
 		}
+		return null;
+	};
 
+	useEffect(() => {
+		checkToken();
 		const fetchUserProfile = async () => {
 			try {
-				const response = await axios.get(
-					`${process.env.REACT_APP_API_URL}profile`,
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
+				const response = await axios.get(`${baseUrl}user/profile`, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				console.log(response);
 				setIsLoading(false);
 				setUserInfo({
 					id: response.data.id,
@@ -66,10 +70,9 @@ export default function UserProfile({ setState }: UserComponentProps) {
 		/>;
 	}
 
-	const navigate = useNavigate();
 	const handleLogout = () => {
 		setState(false);
-		localStorage.removeItem("JWT token");
+		sessionStorage.removeItem("JWT token");
 		localStorage.removeItem("interests");
 		localStorage.removeItem("skills");
 		localStorage.removeItem("toggles");
@@ -78,12 +81,12 @@ export default function UserProfile({ setState }: UserComponentProps) {
 
 	return (
 		<div className="profile">
-			<h2>Welcome back, {userInfo.name}</h2>
 			{errorMessage && (
 				<div className="profile__error-message">{errorMessage}</div>
 			)}
-			<div>
-				<h3>Prompts</h3>
+			<h2 className="profile__title">{userInfo.name}</h2>
+			<div className="profile__container">
+				<h3 className="profile__subheader">Prompts</h3>
 				{/* Map thought array of prompts
                     
                     {prompts.map ((prompt)=>{
@@ -95,8 +98,8 @@ export default function UserProfile({ setState }: UserComponentProps) {
                     }
                     */}
 			</div>
-			<div>
-				<h3>"My" Ideas</h3>
+			<div className="profile__container">
+				<h3 className="profil__subheader">"My" Ideas</h3>
 				{/* map through array of ideas 
                     {ideas.map((idea)=>{
                          return (
@@ -109,7 +112,12 @@ export default function UserProfile({ setState }: UserComponentProps) {
                     
                     */}
 			</div>
-			<button onClick={handleLogout}>LOG OUT</button>
+			<button
+				className="button button--cancel profile__button"
+				onClick={handleLogout}
+			>
+				LOG OUT
+			</button>
 		</div>
 	);
 }

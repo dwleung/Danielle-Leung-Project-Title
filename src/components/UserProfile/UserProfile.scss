@@ -2,3 +2,37 @@
 @use "../../styles/partials/mixins" as *;
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/variables" as *;
+
+.profile {
+	margin: 5rem 1rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	&__container {
+		margin-top: 1rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		gap: 1rem;
+	}
+
+	&__title {
+		@include page-title;
+		text-align: center;
+		width: 100%;
+		border-bottom: 0.2rem solid $primary-accessory;
+
+		&--inactive {
+			border-bottom: none;
+		}
+	}
+
+	&__error-message {
+		font-size: 0.5rem;
+	}
+
+	&__button {
+		margin-top: 1rem;
+	}
+}

@@ -3,7 +3,27 @@
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/variables" as *;
 
-.authPage {
+.login {
+	margin: 5rem 1rem;
+	width: 100%;
 	display: flex;
-	margin-top: 4rem;
+	flex-direction: column;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	&__title {
+		@include page-title;
+		text-align: center;
+		width: 50%;
+		border-bottom: 0.2rem solid $primary-accessory;
+
+		&--inactive {
+			border-bottom: none;
+		}
+	}
 }

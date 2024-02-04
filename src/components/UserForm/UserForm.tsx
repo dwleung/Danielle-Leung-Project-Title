@@ -52,15 +52,17 @@ export default function UserForm(props: FormProps) {
 						/>
 					</>
 				)}
-				<button type="submit" className="button">
-					{props.buttonText}
-				</button>
-				<button
-					className="button button--cancel"
-					onClick={() => navigate(-1)}
-				>
-					CANCEL
-				</button>
+				<div className="form__button-wrapper">
+					<button type="submit" className="button">
+						{props.buttonText}
+					</button>
+					<button
+						className="button button--cancel"
+						onClick={() => navigate(-1)}
+					>
+						CANCEL
+					</button>
+				</div>
 			</form>
 		</div>
 	);

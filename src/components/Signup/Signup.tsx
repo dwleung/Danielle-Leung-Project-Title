@@ -25,6 +25,7 @@ export default function Signup({ baseUrl, setState }: SignupProps) {
 			});
 			setState(true);
 			console.log("You've successfully signed up!");
+			navigate("/user/login");
 		} catch (error) {
 			console.log(error);
 			setErrorMessage(`Unable to sign up: ${error}`);

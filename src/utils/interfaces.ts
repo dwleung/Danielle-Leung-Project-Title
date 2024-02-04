@@ -6,7 +6,7 @@ interface Project {
 }
 
 interface UserComponentProps {
-	baseUrl?: string | undefined;
+	baseUrl: string | undefined;
 	setState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

@@ -5,6 +5,7 @@
 
 .header {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	position: fixed;
 	top: 0;
@@ -48,7 +49,7 @@
 
 	&__logo {
 		width: 3rem;
-		margin-left: auto;
+		align-self: flex-end;
 
 		@include tablet {
 			width: 5rem;
