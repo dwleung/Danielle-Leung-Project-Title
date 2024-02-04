@@ -34,7 +34,7 @@ export default function UserPage({ baseUrl }: UserPageProps): JSX.Element {
 			{!isLoggedIn && isSignedUp && (
 				<Login baseUrl={baseUrl} setState={setIsLoggedIn} />
 			)}
-			<UserProfile />
+			<UserProfile setState={setIsLoggedIn} />
 		</div>
 	);
 }

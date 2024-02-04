@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Typewriter from "typewriter-effect";
+import { getRandomText, loadingText, options } from "../../utils/typewriter";
+import { UserComponentProps } from "../../utils/interfaces";
 
 interface UserInfo {
 	id: number | undefined;
@@ -8,7 +12,7 @@ interface UserInfo {
 	// ideas: object[]
 }
 
-export default function UserProfile() {
+export default function UserProfile({ setState }: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [userInfo, setUserInfo] = useState<UserInfo>({
 		id: undefined,
@@ -48,8 +52,29 @@ export default function UserProfile() {
 	}, [token]);
 
 	if (isLoading) {
-		<h1>Loading...</h1>;
+		<Typewriter
+			options={options}
+			onInit={(typewriter: any) => {
+				loadingText.forEach(() => {
+					typewriter
+						.typeString(getRandomText())
+						.pauseFor(1500)
+						.deleteAll();
+				});
+				typewriter.start();
+			}}
+		/>;
 	}
+
+	const navigate = useNavigate();
+	const handleLogout = () => {
+		setState(false);
+		localStorage.removeItem("JWT token");
+		localStorage.removeItem("interests");
+		localStorage.removeItem("skills");
+		localStorage.removeItem("toggles");
+		navigate("/");
+	};
 
 	return (
 		<div className="profile">
@@ -84,7 +109,7 @@ export default function UserProfile() {
                     
                     */}
 			</div>
-			<button>LOG OUT</button>
+			<button onClick={handleLogout}>LOG OUT</button>
 		</div>
 	);
 }
