@@ -14,7 +14,15 @@
 		@include page-title;
 	}
 
+	&__field {
+		display: block;
+	}
+
 	&__input {
+		margin-bottom: 1rem;
+	}
+
+	button {
 		margin-bottom: 1rem;
 	}
 }

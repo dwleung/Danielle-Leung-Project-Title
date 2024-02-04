@@ -5,4 +5,14 @@
 
 .main {
 	display: flex;
+	margin: 1rem;
+
+	@include tablet {
+		margin: 2.25rem;
+	}
+
+	@include desktop {
+		@include content-width;
+		margin: 0 auto;
+	}
 }

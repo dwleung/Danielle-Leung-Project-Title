@@ -1,4 +1,5 @@
 import UserForm from "../UserForm/UserForm";
+import "./Login.scss";
 import axios from "axios";
 import { useState } from "react";
 import { UserComponentProps } from "../../utils/interfaces";
@@ -46,7 +47,6 @@ export default function Login({ baseUrl, setState }: UserComponentProps) {
 				<label className="label--error">{errorMessage}</label>
 			)}
 			<UserForm
-				titleText="LOG IN"
 				onSubmitFn={handleLogin}
 				buttonText="LOG IN"
 				isSignUpForm={false}

@@ -2,7 +2,6 @@ import "./UserForm.scss";
 import { useNavigate } from "react-router-dom";
 
 interface FormProps {
-	titleText: string;
 	onSubmitFn: (e: any) => void;
 	buttonText: string;
 	isSignUpForm: boolean;
@@ -12,39 +11,48 @@ export default function UserForm(props: FormProps) {
 	const navigate = useNavigate();
 
 	return (
-		<div className="signup form">
-			<h1 className="signup__title">{props.titleText}</h1>
-			<form className="signup__form" onSubmit={props.onSubmitFn}>
+		<div className="form-main">
+			<form className="form" onSubmit={props.onSubmitFn}>
 				{props.isSignUpForm && (
-					<label>
-						NAME
+					<>
+						<label htmlFor="name">NAME</label>
 						<input
-							className="form__input signup__input"
+							className="input form__input"
 							type="text"
 							name="name"
 							placeholder="Enter a name"
 						/>
-					</label>
+					</>
 				)}
-				<label>
-					USERNAME
-					<input
-						className="form__input signup__input"
-						type="text"
-						name="username"
-						placeholder="Enter a username"
-					/>
-				</label>
-				<label>
-					PASSWORD
-					<input
-						className="form__input signup__input"
-						type="password"
-						name="password"
-						placeholder="Enter a password"
-					/>
-				</label>
-				<button type="submit" className="button signup__button">
+				<label htmlFor="username">USERNAME</label>
+				<input
+					className="input form__input"
+					type="text"
+					name="username"
+					placeholder="Enter a username"
+				/>
+
+				<label htmlFor="password">PASSWORD</label>
+				<input
+					className="input form__input"
+					type="password"
+					name="password"
+					placeholder="Enter a password"
+				/>
+				{props.isSignUpForm && (
+					<>
+						<label htmlFor="passwordrepeat">
+							RE-ENTER PASSWORD
+						</label>
+						<input
+							className="input form__input"
+							type="password"
+							name="passwordrepeat"
+							placeholder="Re-enter password"
+						/>
+					</>
+				)}
+				<button type="submit" className="button">
 					{props.buttonText}
 				</button>
 				<button

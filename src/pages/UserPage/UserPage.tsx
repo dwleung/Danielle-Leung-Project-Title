@@ -1,39 +1,43 @@
 import "./UserPage.scss";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
-import Signup from "../../components/Signup/Signup";
-import Login from "../../components/Login/Login";
 
 interface UserPageProps {
 	baseUrl: string | undefined;
+	isLoggedIn: boolean;
+	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+	isSignedUp: boolean;
+	setIsSignedUp: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function UserPage({ baseUrl }: UserPageProps): JSX.Element {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [isSignedUp, setIsSignedUp] = useState(false);
-
+export default function UserPage({
+	baseUrl,
+	isLoggedIn,
+	isSignedUp,
+	setIsLoggedIn,
+	setIsSignedUp,
+}: UserPageProps): JSX.Element {
+	const navigate = useNavigate();
+	const token = localStorage.getItem("JWT token");
 	//get token to check if logged in
 	//otherwise navigate to sign up page
 	useEffect(() => {
-		const token = localStorage.getItem("JWT token");
 		if (token) {
 			setIsLoggedIn(true);
 			setIsSignedUp(true);
 		}
 	}, []);
 
-	// if (!isSignedUp) {
-	// 	return <Signup baseUrl={baseUrl} setState={setIsSignedUp} />;
-	// }
+	if (!token) {
+		navigate("/user/signup");
+	}
+	if (!isLoggedIn && isSignedUp) {
+		navigate("/user/login");
+	}
 
 	return (
 		<div className="authPage">
-			{!isSignedUp && (
-				<Signup baseUrl={baseUrl} setState={setIsSignedUp} />
-			)}
-			{!isLoggedIn && isSignedUp && (
-				<Login baseUrl={baseUrl} setState={setIsLoggedIn} />
-			)}
 			<UserProfile setState={setIsLoggedIn} />
 		</div>
 	);

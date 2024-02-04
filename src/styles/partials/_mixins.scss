@@ -23,9 +23,13 @@
 
 // Page titles
 @mixin page-title {
-	font-size: 2rem;
+	font-size: 1.25rem;
 	font-weight: 600;
 	color: $primary-dark;
 	padding-bottom: 1rem;
 	border-bottom: 0.2rem solid $primary-accessory;
+
+	@include tablet {
+		font-size: 2rem;
+	}
 }

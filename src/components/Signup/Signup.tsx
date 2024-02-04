@@ -1,6 +1,8 @@
 import UserForm from "../UserForm/UserForm";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Signup.scss";
 
 interface SignupProps {
 	baseUrl: string | undefined;
@@ -9,8 +11,8 @@ interface SignupProps {
 
 export default function Signup({ baseUrl, setState }: SignupProps) {
 	const signupUrl = `${baseUrl}user/signup`;
-
 	const [errorMessage, setErrorMessage] = useState("");
+	const navigate = useNavigate();
 
 	const handleSignup = async (e: any) => {
 		e.preventDefault();
@@ -30,9 +32,17 @@ export default function Signup({ baseUrl, setState }: SignupProps) {
 	};
 
 	return (
-		<div>
+		<div className="signup">
+			<div className="signup__wrapper">
+				<h2
+					className="signup__title signup__title--inactive"
+					onClick={() => navigate("/user")}
+				>
+					LOG IN
+				</h2>
+				<h2 className="signup__title">SIGN UP</h2>
+			</div>
 			<UserForm
-				titleText="SIGN UP"
 				onSubmitFn={handleSignup}
 				buttonText="SIGN UP"
 				isSignUpForm={true}
