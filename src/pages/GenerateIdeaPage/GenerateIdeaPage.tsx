@@ -130,7 +130,8 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 		);
 
 		setIsLoading(true);
-		console.log("Line 94 isloading is true", isLoading);
+		console.log("isloading is true", isLoading);
+		console.log("This is the responseString: ", responseString);
 
 		// Update chat history with API response
 		setCustomChatHistory([

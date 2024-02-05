@@ -46,7 +46,6 @@ function App() {
 							<IdeaDetailsPage
 								projectIdea={projectIdea}
 								baseUrl={baseUrl}
-								userInfo={userInfo}
 							/>
 						}
 					/>

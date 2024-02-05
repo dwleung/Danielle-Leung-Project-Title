@@ -11,10 +11,14 @@ interface UserInfo {
 	name: string;
 }
 
+interface IdeaValues {
+	[key: string]: string | string[] | undefined;
+}
+
 export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
-	const [ideaList, setIdeaList] = useState<object[]>([]);
+	const [ideaList, setIdeaList] = useState<IdeaValues[]>([]);
 	const [userInfo, setUserInfo] = useState<UserInfo>({
 		id: undefined,
 		name: "",
@@ -38,7 +42,6 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 						Authorization: `Bearer ${token}`,
 					},
 				});
-				console.log(response);
 				setIsLoading(false);
 				setUserInfo({
 					id: response.data.id,
@@ -58,8 +61,8 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 						Authorization: `Bearer ${token}`,
 					},
 				});
-				console.log(response.data);
-				// setIdeaList(response.data);
+				const ideas = response.data;
+				setIdeaList(ideas);
 			} catch (error: any) {
 				setErrorMessage(
 					`There was an issue getting your saved ideas: ${error.response.data.message}`
@@ -144,14 +147,13 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			<div className="profile__container">
 				<h3 className="profile__subheader">"My" Ideas</h3>
 
-				{/* {ideaList.map((idea)=>{
-                         return (
-                              <div className="profile__idea">
-                              <Link to=`/profile/ideas/${}`>
-                              <div>{idea.title}</div> </Link>
-                              </div>
-                         )
-                    })} */}
+				{ideaList.map((idea) => {
+					return (
+						<div className="profile__idea">
+							<div>{idea.title}</div>
+						</div>
+					);
+				})}
 			</div>
 			<button
 				className="button button--cancel profile__button"

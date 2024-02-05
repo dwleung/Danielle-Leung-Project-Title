@@ -59,13 +59,13 @@ export default function IdeaDetailsPage({
 		}
 
 		try {
-			const { title, description, requirements } = projectIdea;
+			// const { title, description, requirements } = projectIdea;
 			const response = await axios.post(
 				`${baseUrl}user/ideas`,
 				{
-					title: { title },
-					description: { description },
-					requirements: { requirements },
+					title: projectIdea.title,
+					description: projectIdea.description,
+					requirements: projectIdea.requirements,
 				},
 				{
 					headers: {
