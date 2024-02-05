@@ -4,6 +4,8 @@ import axios from "axios";
 import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import Toggle from "../../components/Toggle/Toggle";
+import Typewriter from "typewriter-effect";
+import { getRandomText, loadingText, options } from "../../utils/typewriter";
 
 interface IdeaPageProps {
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
@@ -15,6 +17,7 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 	const [interests, setInterests] = useState("");
 	const [skills, setSkills] = useState("");
 	const [toggles, setToggles] = useState<string[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	// RECORD CHAT HISTORY TO IMPROVE RANDOMNESS OF RESPONSE
 	const [chatHistory, setChatHistory] = useState<object[]>([]);
@@ -86,6 +89,8 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 			shortHistory
 		);
 
+		setIsLoading(true);
+		console.log("Line 94 isloading is true", isLoading);
 		// Add new API response to chat history
 		setChatHistory([
 			...shortHistory,
@@ -98,6 +103,7 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 		// Convert response to object for better rendering, and navigate to project details
 		const responseObject = JSON.parse(responseString.data.content);
 		setProjectIdea(responseObject);
+		navigate("/idea/details");
 	};
 
 	const getCustomProjectIdea = async (e: any) => {
@@ -123,6 +129,9 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 			shortHistory
 		);
 
+		setIsLoading(true);
+		console.log("Line 94 isloading is true", isLoading);
+
 		// Update chat history with API response
 		setCustomChatHistory([
 			...shortHistory,
@@ -136,6 +145,21 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 		setProjectIdea(responseObject);
 		navigate("/idea/details");
 	};
+
+	if (isLoading) {
+		<Typewriter
+			options={options}
+			onInit={(typewriter: any) => {
+				loadingText.forEach(() => {
+					typewriter
+						.typeString(getRandomText())
+						.pauseFor(1500)
+						.deleteAll();
+				});
+				typewriter.start();
+			}}
+		/>;
+	}
 
 	return (
 		<div className="idea">
