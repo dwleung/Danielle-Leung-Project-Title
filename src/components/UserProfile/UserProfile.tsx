@@ -4,26 +4,21 @@ import axios from "axios";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
 import "./UserProfile.scss";
+import { UserComponentProps } from "../../utils/interfaces";
 
 interface UserInfo {
 	id: number | undefined;
 	name: string;
 }
 
-interface UserProfileProps {
-	baseUrl: string | undefined;
-	setState: React.Dispatch<React.SetStateAction<boolean>>;
-	userInfo: UserInfo;
-	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
-}
-export default function UserProfile({
-	baseUrl,
-	setState,
-	userInfo,
-	setUserInfo,
-}: UserProfileProps) {
+export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
+	const [ideaList, setIdeaList] = useState<object[]>([]);
+	const [userInfo, setUserInfo] = useState<UserInfo>({
+		id: undefined,
+		name: "",
+	});
 	const navigate = useNavigate();
 
 	const token: string | null = sessionStorage.getItem("JWT token");
@@ -56,7 +51,24 @@ export default function UserProfile({
 			}
 		};
 
+		const fetchIdeas = async () => {
+			try {
+				const response = await axios.get(`${baseUrl}user/ideas`, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				console.log(response.data);
+				// setIdeaList(response.data);
+			} catch (error: any) {
+				setErrorMessage(
+					`There was an issue getting your saved ideas: ${error.response.data.message}`
+				);
+			}
+		};
+
 		fetchUserProfile();
+		fetchIdeas();
 	}, [token]);
 
 	// Fetch user's saved prompts
@@ -131,17 +143,15 @@ export default function UserProfile({
 			</div>
 			<div className="profile__container">
 				<h3 className="profile__subheader">"My" Ideas</h3>
-				{/* map through array of ideas 
-                    {ideas.map((idea)=>{
+
+				{/* {ideaList.map((idea)=>{
                          return (
                               <div className="profile__idea">
-                              <Link to="/profile/ideas/:id">
+                              <Link to=`/profile/ideas/${}`>
                               <div>{idea.title}</div> </Link>
                               </div>
                          )
-                    })}
-                    
-                    */}
+                    })} */}
 			</div>
 			<button
 				className="button button--cancel profile__button"

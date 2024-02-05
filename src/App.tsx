@@ -5,7 +5,7 @@ import { useState } from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import IdeaPage from "./pages/GenerateIdeaPage/GenerateIdeaPage";
 import IdeaDetailsPage from "./pages/IdeaDetailsPage/IdeaDetailsPage";
-import { Project, UserInfo } from "./utils/interfaces";
+import { Project } from "./utils/interfaces";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import UserPage from "./pages/UserPage/UserPage";
@@ -24,10 +24,6 @@ function App() {
 
 	const [isSignedUp, setIsSignedUp] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [userInfo, setUserInfo] = useState<UserInfo>({
-		id: undefined,
-		name: "",
-	});
 
 	return (
 		<BrowserRouter>
@@ -81,8 +77,6 @@ function App() {
 							<UserProfile
 								baseUrl={baseUrl}
 								setState={setIsLoggedIn}
-								userInfo={userInfo}
-								setUserInfo={setUserInfo}
 							/>
 						}
 					/>

@@ -7,13 +7,11 @@ import "./IdeaDetailsPage.scss";
 interface detailsPageProps {
 	projectIdea: Project;
 	baseUrl: string | undefined;
-	userInfo: UserInfo;
 }
 
 export default function IdeaDetailsPage({
 	projectIdea,
 	baseUrl,
-	userInfo,
 }: detailsPageProps) {
 	const [promptButtonText, setPromptButtonText] = useState("SAVE");
 	const [ideaButtonText, setIdeaButtonText] = useState("SAVE");
@@ -21,23 +19,31 @@ export default function IdeaDetailsPage({
 	const interests = localStorage.getItem("Interests");
 	const skills = localStorage.getItem("Skills");
 	const toggles = localStorage.getItem("Toggles");
-	const userId = userInfo.id; // this is not getting userId right now
+	const token = sessionStorage.getItem("JWT token");
 
 	const navigate = useNavigate();
 
 	// SAVE PROMPTS TO PROFILE
 	const savePrompts = async () => {
-		if (!userId) {
+		if (!token) {
 			navigate("/user/login");
 			return;
 		}
 
 		try {
-			const response = await axios.post(`${baseUrl}user/prompts`, {
-				interests: interests,
-				skills: skills,
-				toggles: toggles,
-			});
+			const response = await axios.post(
+				`${baseUrl}user/prompts`,
+				{
+					interests: interests,
+					skills: skills,
+					toggles: toggles,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
 			console.log(response.data);
 			setPromptButtonText("SAVED!");
 		} catch (error) {
@@ -47,7 +53,7 @@ export default function IdeaDetailsPage({
 
 	//SAVE IDEAS TO PROFILE
 	const saveIdeas = async () => {
-		if (!userId) {
+		if (!token) {
 			navigate("/user/login");
 			return;
 		}
@@ -55,12 +61,16 @@ export default function IdeaDetailsPage({
 		try {
 			const { title, description, requirements } = projectIdea;
 			const response = await axios.post(
-				`${baseUrl}user/${userId}/ideas`,
+				`${baseUrl}user/ideas`,
 				{
-					id: userId,
 					title: { title },
 					description: { description },
 					requirements: { requirements },
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
 				}
 			);
 			console.log(response.data);
