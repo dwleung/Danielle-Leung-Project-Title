@@ -19,6 +19,26 @@ export default function UserForm(props: FormProps) {
 	const [touched, setTouched] = useState<FormValues>({});
 	const [focused, setFocused] = useState<string | null>(null);
 
+	//Function to check if passwords matched
+	const passwordCheck = () => {
+		const password = values.password || "";
+		const passwordRepeat = values.passwordRepeat || "";
+
+		if (password !== passwordRepeat) {
+			setErrors({
+				...errors,
+				password: "Passwords do not match",
+				passwordRepeat: "Passwords do not match",
+			});
+		} else {
+			setErrors({
+				...errors,
+				password: "",
+				passwordRepeat: "",
+			});
+		}
+	};
+
 	//Function to handle input changes
 	const handleChange = (e: any) => {
 		const { name, value } = e.target;
@@ -32,6 +52,10 @@ export default function UserForm(props: FormProps) {
 			setErrors({ ...errors, [name]: "This field is required" });
 		} else {
 			setErrors({ ...errors, [name]: "" });
+		}
+
+		if (name === "password" || name === "passwordRepeat") {
+			passwordCheck();
 		}
 	};
 
@@ -47,6 +71,8 @@ export default function UserForm(props: FormProps) {
 		setTouched({ ...touched, [name]: true });
 		if (!value.trim()) {
 			setErrors({ ...errors, [name]: "This field is required" });
+		} else {
+			setErrors({ ...errors, [name]: "" });
 		}
 	};
 
@@ -57,18 +83,6 @@ export default function UserForm(props: FormProps) {
 			return "input--error";
 		}
 		return;
-	};
-
-	//check passwords equal each other
-	//disable submit button if there are form errors
-	const passwordCheck = (fieldName: string, matchingField: string) => {
-		if (matchingField !== fieldName) {
-			setErrors({
-				...errors,
-				[fieldName]: "Passwords do not match",
-				[matchingField]: "Passwords do not match",
-			});
-		}
 	};
 
 	return (
@@ -186,13 +200,7 @@ export default function UserForm(props: FormProps) {
 					</>
 				)}
 				<div className="form__button-wrapper">
-					<button
-						type="submit"
-						className="button"
-						onClick={() => {
-							passwordCheck("password", "passwordRepeat");
-						}}
-					>
+					<button type="submit" className="button">
 						{props.buttonText}
 					</button>
 					<button
