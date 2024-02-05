@@ -43,7 +43,6 @@
 		rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 	border-radius: 0.25rem;
 	border: none;
-	// border: 0.063rem solid $primary-light;
 
 	@include tablet {
 		width: 6.5rem;
@@ -51,6 +50,10 @@
 
 	&--error {
 		border: 0.063rem solid $primary-accessory;
+	}
+
+	&--focus {
+		border: 0.063rem solid $secondary-dark;
 	}
 }
 
