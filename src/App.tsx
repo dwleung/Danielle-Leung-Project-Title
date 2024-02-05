@@ -54,9 +54,7 @@ function App() {
 						element={
 							<UserPage
 								baseUrl={baseUrl}
-								isSignedUp={isSignedUp}
 								setIsSignedUp={setIsSignedUp}
-								isLoggedIn={isLoggedIn}
 								setIsLoggedIn={setIsLoggedIn}
 							/>
 						}

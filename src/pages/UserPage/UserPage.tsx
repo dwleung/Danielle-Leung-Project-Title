@@ -7,16 +7,12 @@ import { useState } from "react";
 
 interface UserPageProps {
 	baseUrl: string | undefined;
-	isLoggedIn: boolean;
-	isSignedUp: boolean;
 	setIsSignedUp: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function UserPage({
 	baseUrl,
-	isSignedUp,
-	isLoggedIn,
 	setIsSignedUp,
 	setIsLoggedIn,
 }: UserPageProps): JSX.Element {
@@ -30,7 +26,7 @@ export default function UserPage({
 		if (token) {
 			setIsLoggedIn(true);
 			setIsSignedUp(true);
-			// navigate to user profile
+			navigate("/user");
 		}
 	}, []);
 
