@@ -3,22 +3,26 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
-import { UserComponentProps } from "../../utils/interfaces";
 import "./UserProfile.scss";
 
 interface UserInfo {
 	id: number | undefined;
 	name: string;
-	// prompts: string[],
-	// ideas: object[]
 }
 
-export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
+interface UserProfileProps {
+	baseUrl: string | undefined;
+	setState: React.Dispatch<React.SetStateAction<boolean>>;
+	userInfo: UserInfo;
+	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+}
+export default function UserProfile({
+	baseUrl,
+	setState,
+	userInfo,
+	setUserInfo,
+}: UserProfileProps) {
 	const [isLoading, setIsLoading] = useState(true);
-	const [userInfo, setUserInfo] = useState<UserInfo>({
-		id: undefined,
-		name: "",
-	});
 	const [errorMessage, setErrorMessage] = useState("");
 	const navigate = useNavigate();
 
@@ -55,6 +59,14 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 		fetchUserProfile();
 	}, [token]);
 
+	// Fetch user's saved prompts
+	const interests = localStorage.getItem("Interests");
+	const interestsList = interests?.split(",");
+	const skills = localStorage.getItem("Skills");
+	const skillsList = skills?.split(",");
+	const toggles = localStorage.getItem("Toggles");
+	const togglesList = toggles?.split(",");
+
 	if (isLoading) {
 		<Typewriter
 			options={options}
@@ -73,9 +85,9 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 	const handleLogout = () => {
 		setState(false);
 		sessionStorage.removeItem("JWT token");
-		localStorage.removeItem("interests");
-		localStorage.removeItem("skills");
-		localStorage.removeItem("toggles");
+		localStorage.removeItem("Interests");
+		localStorage.removeItem("Skills");
+		localStorage.removeItem("Toggles");
 		navigate("/");
 	};
 
@@ -86,17 +98,36 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			)}
 			<h2 className="profile__title">{userInfo.name}</h2>
 			<div className="profile__container">
-				<h3 className="profile__subheader">Prompts</h3>
-				{/* Map thought array of prompts
-                    
-                    {prompts.map ((prompt)=>{
-                         return (
-                              <p>{prompt}</p>
-                         )
-                    })
-
-                    }
-                    */}
+				<h4 className="profile__subheader">My Prompts</h4>
+				<div className="prompt__container">
+					<div className="prompt__wrapper">
+						<p>Interests</p>
+						{interestsList?.map((interest) => {
+							return (
+								<span className="prompt__item">
+									{interest.trim()}
+								</span>
+							);
+						})}
+					</div>
+					<div className="prompt__wrapper">
+						<p>Skills</p>
+						{skillsList?.map((skill) => {
+							return (
+								<span className="prompt__item">
+									{skill.trim()}
+								</span>
+							);
+						})}
+						{togglesList?.map((toggle) => {
+							return (
+								<span className="prompt__item">
+									{toggle.trim()}
+								</span>
+							);
+						})}
+					</div>
+				</div>
 			</div>
 			<div className="profile__container">
 				<h3 className="profile__subheader">"My" Ideas</h3>

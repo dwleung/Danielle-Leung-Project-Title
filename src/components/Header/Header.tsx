@@ -14,7 +14,7 @@ export default function Header() {
 					Home
 				</Link>
 				<Link
-					to="/user"
+					to="/user/login"
 					className={`header__link ${({
 						isActive,
 					}: {

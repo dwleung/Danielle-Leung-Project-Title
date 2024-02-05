@@ -131,7 +131,6 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 				content: responseString.data.content,
 			},
 		]);
-
 		// Convert response to object for better rendering, and navigate to project details
 		const responseObject = JSON.parse(responseString.data.content);
 		setProjectIdea(responseObject);
@@ -140,6 +139,7 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 
 	return (
 		<div className="idea">
+			<h2 className="idea__title">IDEA</h2>
 			<form className="idea__form">
 				<div className="idea__input-wrapper">
 					<p className="idea__input-question">

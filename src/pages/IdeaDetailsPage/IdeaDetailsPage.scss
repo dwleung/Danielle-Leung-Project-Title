@@ -4,5 +4,55 @@
 @use "../../styles/partials/variables" as *;
 
 .idea-details-page {
+	margin: 5rem 1rem 1rem 1rem;
 	display: flex;
+	flex-direction: column;
+	&__title {
+		@include page-title;
+	}
+}
+.prompt {
+	padding: 1rem;
+	border: 0.063rem solid $secondary-dark;
+
+	&__title {
+		color: $secondary-dark;
+		font-size: 1rem;
+	}
+
+	&__subtitle {
+		font-size: 0.75rem;
+		margin-bottom: 1rem;
+	}
+
+	&__wrapper {
+		margin-bottom: 1rem;
+		h4 {
+			font-size: 1rem;
+			color: $secondary-dark;
+		}
+		p {
+			font-size: 0.75rem;
+		}
+	}
+}
+
+.details {
+	margin: 2rem 0;
+
+	&__wrapper {
+		margin-bottom: 1rem;
+	}
+	&__title {
+		@include page-title;
+	}
+
+	&__header {
+		color: $secondary-dark;
+	}
+
+	&__content {
+		margin-bottom: 1rem;
+		list-style-type: none;
+	}
 }

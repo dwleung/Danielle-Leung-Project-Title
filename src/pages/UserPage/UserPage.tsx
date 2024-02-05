@@ -20,7 +20,7 @@ export default function UserPage({
 	const [errorMessage, setErrorMessage] = useState("");
 	const loginUrl = `${baseUrl}user/login`;
 	const navigate = useNavigate();
-	const token = localStorage.getItem("JWT token");
+	const token = sessionStorage.getItem("JWT token");
 
 	useEffect(() => {
 		if (token) {
