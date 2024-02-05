@@ -54,7 +54,10 @@ export default function UserForm(props: FormProps) {
 			setErrors({ ...errors, [name]: "" });
 		}
 
-		if (name === "password" || name === "passwordRepeat") {
+		if (
+			(props.isSignUpForm && name === "password") ||
+			name === "passwordRepeat"
+		) {
 			passwordCheck();
 		}
 	};

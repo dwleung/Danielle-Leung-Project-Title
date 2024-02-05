@@ -33,15 +33,11 @@ export default function IdeaDetailsPage({
 		}
 
 		try {
-			const response = await axios.post(
-				`${baseUrl}user/${userId}/prompts`,
-				{
-					user_id: userId,
-					interests: interests,
-					skills: skills,
-					toggles: toggles,
-				}
-			);
+			const response = await axios.post(`${baseUrl}user/prompts`, {
+				interests: interests,
+				skills: skills,
+				toggles: toggles,
+			});
 			console.log(response.data);
 			setPromptButtonText("SAVED!");
 		} catch (error) {
