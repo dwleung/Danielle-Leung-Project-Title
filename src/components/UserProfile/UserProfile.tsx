@@ -133,14 +133,14 @@ export default function UserProfile({
 				console.log(response.data);
 
 				// parse data into JSON object
-				const mappedIdeas = ideas.forEach((idea: any) => {
+				ideas.forEach((idea: any) => {
 					{
 						idea.requirements = JSON.parse(
 							idea.requirements.split(",")
 						);
 					}
 				});
-				setIdeaList(mappedIdeas);
+				setIdeaList(ideas);
 			} catch (error: any) {
 				setErrorMessage(
 					`There was an issue getting your saved ideas: ${error.response.data.message}`
