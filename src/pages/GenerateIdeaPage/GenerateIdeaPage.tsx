@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Toggle from "../../components/Toggle/Toggle";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
+import blueArrow from "../../assets/icons/blueArrow.svg";
 
 interface IdeaPageProps {
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
@@ -85,7 +86,7 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 
 		// API request with history
 		const responseString = await axios.post(
-			`${baseUrl}/openai/`,
+			`${baseUrl}openai/`,
 			shortHistory
 		);
 
@@ -100,10 +101,17 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 			},
 		]);
 
-		// Convert response to object for better rendering, and navigate to project details
-		const responseObject = JSON.parse(responseString.data.content);
-		setProjectIdea(responseObject);
-		navigate("/idea/details");
+		console.log(typeof responseString.data.content);
+		console.log(responseString.data.content);
+		if (typeof responseString.data.content === "string") {
+			// Convert response to object for better rendering, and navigate to project details
+			const responseObject = JSON.parse(responseString.data.content);
+			setProjectIdea(responseObject);
+			navigate("/idea/details");
+		} else {
+			console.log(responseString.data.content);
+			console.error("Incorrect response format");
+		}
 	};
 
 	const getCustomProjectIdea = async (e: any) => {
@@ -165,16 +173,25 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 	return (
 		<div className="idea">
 			<h2 className="idea__title">IDEA</h2>
+			<div className="idea__container">
+				<p className="idea__subtitle">Give me a random idea! </p>
+				<img
+					className="idea__button"
+					src={blueArrow}
+					onClick={getRandomProjectIdea}
+				/>
+			</div>
 			<form className="idea__form">
 				<div className="idea__input-wrapper">
-					<p className="idea__input-question">
-						What are some things that interest you? For
-						example, hobbies, causes, industries, or
+					<p className="idea__input-prompt">
+						What are some things that interest you?{" "}
+					</p>
+					<p className="idea__input-subtitle">
+						For example, hobbies, causes, industries, or
 						curiosities.
 					</p>
-
 					<input
-						className="form__input idea__input"
+						className="input idea__input"
 						id="inputInterest"
 						name="inputInterest"
 						type="text"
@@ -184,12 +201,13 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 					/>
 				</div>
 				<div className="idea__input-wrapper">
-					<p className="idea__input-question">
+					<p className="idea__input-prompt">
 						What would you like to work on in this project?
+					</p>
+					<p className="idea__input-subtitle">
 						For example, a programming language, a type of
 						application, a type of feature.
 					</p>
-
 					<input
 						id="inputSkills"
 						name="inputSkills"
@@ -197,45 +215,40 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 						value={skills}
 						placeholder="Skills"
 						onChange={handleChangeSkills}
-						className="form__input idea__input"
+						className="input idea__input"
 					></input>
 				</div>
-				<div className="idea__toggles">
-					<div className="idea__toggle-wrapper">
-						{/* items that toggle ON and get added to the toggles list */}
+				<div className="toggle">
+					<div className="toggle__wrapper">
 						<Toggle
 							clickHandler={handleToggle}
 							name="database"
 						/>
-						database
+						<p className="toggle__name">database</p>
 					</div>
-					<div className="idea__toggle-wrapper">
-						{/* items that toggle ON and get added to the toggles list */}
+					<div className="toggle__wrapper">
 						<Toggle clickHandler={handleToggle} name="API" />
-						API
+						<p className="toggle__name">API</p>
 					</div>
-					<div className="idea__toggle-wrapper">
-						{/* items that toggle ON and get added to the toggles list */}
+					<div className="toggle__wrapper">
 						<Toggle
 							clickHandler={handleToggle}
 							name="user login"
 						/>
-						user login
+						<p className="toggle__name">user login</p>
 					</div>
-					<div className="idea__toggle-wrapper">
-						{/* items that toggle ON and get added to the toggles list */}
+					<div className="toggle__wrapper">
 						<Toggle
 							clickHandler={handleToggle}
 							name="single-page application"
 						/>
-						single-page application
+						<p className="toggle__name">
+							single-page application
+						</p>
 					</div>
 				</div>
 				<button onClick={getCustomProjectIdea}>CUSTOM IDEA</button>
 			</form>
-
-			<p>Need some inspiration?</p>
-			<button onClick={getRandomProjectIdea}>RANDOM IDEA</button>
 		</div>
 	);
 }

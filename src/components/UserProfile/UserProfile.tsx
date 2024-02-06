@@ -19,6 +19,8 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [ideaList, setIdeaList] = useState<IdeaValues[]>([]);
+	// const [interestsList, setInterestsList] = useState([]);
+	// const [skillsList, setSkillsList] = useState([]);
 	const [userInfo, setUserInfo] = useState<UserInfo>({
 		id: undefined,
 		name: "",
@@ -54,6 +56,31 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			}
 		};
 
+		// const fetchPrompts = async () => {
+		// 	console.log("inside fetch prompts");
+		// 	try {
+		// 		const response = await axios.get(`${baseUrl}user/prompts`, {
+		// 			headers: {
+		// 				Authorization: `Bearer ${token}`,
+		// 			},
+		// 		});
+		// 		const prompts = response.data;
+		// 		console.log(prompts);
+		// 		prompts.forEach((element) => {
+		// 			const interests = element.interests.split(",").trim();
+		// 			setInterestsList([...interestsList, interests]);
+		// 			const skills = element.split(",").trim();
+		// 			setSkillsList([...skillsList, skills]);
+		// 			const toggles = element.split(",").trim();
+		// 			setSkillsList([...skillsList, toggles]);
+		// 		});
+		// 	} catch (error: any) {
+		// 		setErrorMessage(
+		// 			`There was an issue getting your saved prompts: ${error.response.data.message}`
+		// 		);
+		// 	}
+		// };
+
 		const fetchIdeas = async () => {
 			try {
 				const response = await axios.get(`${baseUrl}user/ideas`, {
@@ -71,6 +98,7 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 		};
 
 		fetchUserProfile();
+		// fetchPrompts();
 		fetchIdeas();
 	}, [token]);
 

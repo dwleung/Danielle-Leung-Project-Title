@@ -43,6 +43,7 @@
 		rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 	border-radius: 0.25rem;
 	border: none;
+	text-wrap: wrap;
 
 	@include tablet {
 		width: 6.5rem;

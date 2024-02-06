@@ -123,9 +123,17 @@ export default function IdeaDetailsPage({
 					</h3>
 				</div>
 				<ul className="details__wrapper details__list">
-					<li className="details__content">
-						{projectIdea.requirements[0]}
-					</li>
+					{projectIdea.requirements.map((item) => {
+						return (
+							<li
+								key={Math.floor(Math.random())}
+								className="details__content"
+							>
+								{item.toString().split(":")[1]}
+							</li>
+						);
+					})}
+
 					<li className="details__content">
 						{projectIdea.requirements[1]}
 					</li>

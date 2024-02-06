@@ -12,22 +12,47 @@
 		@include page-title;
 	}
 
+	&__container {
+		display: flex;
+		align-items: center;
+	}
+
+	&__button {
+		font-size: 1.5rem;
+		margin: 1rem;
+		width: 4rem;
+		height: 4rem;
+	}
+
 	&__form {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
 		height: 100%;
 		margin: 1rem auto;
+	}
+	&__input-wrapper {
+		display: flex;
+		flex-direction: column;
+	}
 
-		&__input-wrapper {
-			@include page-title;
-		}
+	&__input-prompt {
+		font-size: 0.75rem;
+		color: $primary-dark;
+		font-weight: 700;
+	}
 
-		&__input-question {
-		}
+	&__input-subtitle {
+		font-size: 0.75rem;
+		color: $primary-dark;
+	}
 
-		&__input {
-			margin-bottom: 1rem;
-		}
+	&__input {
+		margin-bottom: 1rem;
+		color: $primary-dark;
+		margin-top: 0.75rem;
+	}
+
+	&__toggles {
 	}
 }
