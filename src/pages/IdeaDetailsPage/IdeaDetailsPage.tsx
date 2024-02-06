@@ -148,7 +148,7 @@ export default function IdeaDetailsPage({
 				</div>
 				<ul className="details__wrapper details__list">
 					{typeof projectIdea.requirements === "string"
-						? JSON.parse(projectIdea.requirements.split(","))
+						? JSON.parse(projectIdea.requirements)
 						: projectIdea.requirements.map((item) => {
 								return (
 									<li
