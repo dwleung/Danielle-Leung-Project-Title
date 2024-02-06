@@ -17,6 +17,8 @@ export default function IdeaDetailsPage({
 	setIdeaList,
 	setSaveIdea,
 }: detailsPageProps) {
+	console.log("project idea: ", projectIdea);
+	console.log("typeof Project idea req", typeof projectIdea.requirements);
 	const [promptButtonText, setPromptButtonText] = useState("SAVE");
 	const [ideaButtonText, setIdeaButtonText] = useState("SAVE");
 
@@ -145,16 +147,18 @@ export default function IdeaDetailsPage({
 					</h3>
 				</div>
 				<ul className="details__wrapper details__list">
-					{projectIdea.requirements.map((item) => {
-						return (
-							<li
-								key={Math.random()}
-								className="details__content"
-							>
-								{item}
-							</li>
-						);
-					})}
+					{typeof projectIdea.requirements === "string"
+						? JSON.parse(projectIdea.requirements.split(","))
+						: projectIdea.requirements.map((item) => {
+								return (
+									<li
+										key={Math.random()}
+										className="details__content"
+									>
+										{item}
+									</li>
+								);
+						  })}
 				</ul>
 				<button className="button" onClick={saveIdeas}>
 					{ideaButtonText}

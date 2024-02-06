@@ -19,6 +19,7 @@ export default function UserProfile({
 	setIdeaList,
 	saveIdea,
 	setProjectIdea,
+	setSaveIdea,
 }: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
@@ -61,7 +62,9 @@ export default function UserProfile({
 
 		if (saveIdea === true) {
 			console.log("inside Save Idea");
+			setSaveIdea(false);
 			const saveIdea = async () => {
+				console.log("INSIDE THE FUNCTION");
 				try {
 					const response = await axios.post(
 						`${baseUrl}user/ideas`,
@@ -76,14 +79,16 @@ export default function UserProfile({
 							},
 						}
 					);
-					console.log(response.data);
+					return console.log(
+						"Save Idea response data",
+						response.data
+					);
 				} catch (error) {
 					setErrorMessage(
 						`Unable to save idea to user profile: ${error}`
 					);
 				}
 			};
-			saveIdea();
 		}
 
 		const fetchPrompts = async () => {
@@ -177,7 +182,10 @@ export default function UserProfile({
 								</h4>
 								{interestsList?.map((interest) => {
 									return (
-										<span className="prompt__item">
+										<span
+											key={Math.random()}
+											className="prompt__item"
+										>
 											{interest}
 										</span>
 									);
@@ -189,7 +197,10 @@ export default function UserProfile({
 								</h4>
 								{skillsList?.map((skill) => {
 									return (
-										<span className="prompt__item">
+										<span
+											key={Math.random()}
+											className="prompt__item"
+										>
 											{skill}
 										</span>
 									);

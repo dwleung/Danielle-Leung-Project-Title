@@ -86,6 +86,7 @@ function App() {
 								ideaList={ideaList}
 								setIdeaList={setIdeaList}
 								saveIdea={saveIdea}
+								setSaveIdea={setSaveIdea}
 								setProjectIdea={setProjectIdea}
 							/>
 						}

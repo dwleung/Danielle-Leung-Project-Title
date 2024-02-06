@@ -17,6 +17,7 @@ interface UserComponentProps {
 	setIdeaList: React.Dispatch<React.SetStateAction<Project[]>>;
 	saveIdea: boolean;
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
+	setSaveIdea: (arg0: boolean) => void;
 }
 
 interface IdeaValues {
