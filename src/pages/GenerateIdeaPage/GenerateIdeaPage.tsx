@@ -63,39 +63,9 @@ export default function IdeaPage(props: IdeaPageProps) {
 		localStorage.setItem("Toggles", toggles.toString());
 	};
 
-	// OpenAI API REQUESTS //
+	// OpenAI API REQUEST//
 	// User input and API response is added into chat history, to decrease the chance of repeated responses from API
 	// Response strings are converted to objects before setting projectIdea
-
-	// const getRandomProjectIdea = async (e: any) => {
-	// 	e.preventDefault();
-	// 	savePrompts();
-	// 	// Add the user input to chat history
-	// 	const history = [
-	// 		...chatHistory,
-	// 		{
-	// 			role: "user",
-	// 			content: "Suggest a different software engineering project.",
-	// 		},
-	// 	];
-	// 	console.log(history);
-
-	// 	// API request with history
-	// 	const response = await axios.post(`${baseUrl}openai/`, history);
-
-	// 	setIsLoading(true);
-	// 	console.log("Line 94 isloading is true", isLoading);
-	// 	// Add new API response to chat history
-	// 	setChatHistory([
-	// 		...history,
-	// 		{
-	// 			role: "assistant",
-	// 			content: response.data.content,
-	// 		},
-	// 	]);
-	// 	setProjectIdea(JSON.parse(response.data.content));
-	// 	navigate("/idea/details");
-	// };
 
 	const getProjectIdea = async (e: any) => {
 		e.preventDefault();
@@ -224,6 +194,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 					className="idea__button"
 					src={blueArrow}
 					onClick={getProjectIdea}
+					alt="blue arrow pointing right for submit function"
 				/>
 			</form>
 		</div>

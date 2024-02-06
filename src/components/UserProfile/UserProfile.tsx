@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import orangeArrow from "../../assets/icons/orangeArrow.svg";
 import axios from "axios";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
 import "./UserProfile.scss";
-import { UserComponentProps } from "../../utils/interfaces";
+import { UserComponentProps, Project } from "../../utils/interfaces";
 
 interface UserInfo {
 	id: number | undefined;
 	name: string;
 }
 
-interface IdeaValues {
-	[key: string]: string | string[] | undefined;
-}
-
-export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
+export default function UserProfile({
+	baseUrl,
+	setState,
+	ideaList,
+	setIdeaList,
+	saveIdea,
+	setProjectIdea,
+}: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
-	const [ideaList, setIdeaList] = useState<IdeaValues[]>([]);
 	const [interestsList, setInterestsList] = useState<string[]>([]);
 	const [skillsList, setSkillsList] = useState<string[]>([]);
 	const [userInfo, setUserInfo] = useState<UserInfo>({
@@ -56,8 +59,34 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			}
 		};
 
+		if (saveIdea === true) {
+			console.log("inside Save Idea");
+			const saveIdea = async () => {
+				try {
+					const response = await axios.post(
+						`${baseUrl}user/ideas`,
+						{
+							title: ideaList[0].title,
+							description: ideaList[0].description,
+							requirements: ideaList[0].requirements,
+						},
+						{
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
+					console.log(response.data);
+				} catch (error) {
+					setErrorMessage(
+						`Unable to save idea to user profile: ${error}`
+					);
+				}
+			};
+			saveIdea();
+		}
+
 		const fetchPrompts = async () => {
-			console.log("inside fetch prompts");
 			try {
 				const response = await axios.get(`${baseUrl}user/prompts`, {
 					headers: {
@@ -65,7 +94,6 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 					},
 				});
 				const prompts = response.data;
-				console.log(prompts);
 				prompts.forEach((element: any) => {
 					const interests = element.interests.split(",");
 					setInterestsList(interests);
@@ -73,6 +101,7 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 					const toggles = element.toggles.split(",");
 					skills.push(toggles);
 					setSkillsList(skills);
+					console.log(skills);
 				});
 			} catch (error: any) {
 				setErrorMessage(
@@ -89,6 +118,7 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 					},
 				});
 				const ideas = response.data;
+				console.log(response.data);
 				setIdeaList(ideas);
 			} catch (error: any) {
 				setErrorMessage(
@@ -116,6 +146,11 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			}}
 		/>;
 	}
+
+	const handleClickIdea = (idea: Project) => {
+		setProjectIdea(idea);
+		navigate("/idea/details");
+	};
 
 	const handleLogout = () => {
 		setState(false);
@@ -166,11 +201,27 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			</div>
 			<div className="profile__container">
 				<h3 className="profile__subheader">"My" Ideas</h3>
+				{!ideaList.length ? (
+					<p className="profile__note">
+						You don't have any saved ideas yet!
+					</p>
+				) : (
+					""
+				)}
 
 				{ideaList.map((idea) => {
 					return (
-						<div className="profile__idea">
-							<div>{idea.title}</div>
+						<div
+							key={idea.id}
+							className="profile__idea-wrapper"
+						>
+							<p className="profile__idea">{idea.title}</p>
+							<img
+								className="profile__idea-button"
+								onClick={() => handleClickIdea(idea)}
+								src={orangeArrow}
+								alt="orange arrow pointing right"
+							/>
 						</div>
 					);
 				})}

@@ -2,10 +2,10 @@ import React from "react";
 import "./App.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { Project } from "./utils/interfaces";
 import HomePage from "./pages/HomePage/HomePage";
 import IdeaPage from "./pages/GenerateIdeaPage/GenerateIdeaPage";
 import IdeaDetailsPage from "./pages/IdeaDetailsPage/IdeaDetailsPage";
-import { Project } from "./utils/interfaces";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import UserPage from "./pages/UserPage/UserPage";
@@ -25,6 +25,8 @@ function App() {
 	const [isSignedUp, setIsSignedUp] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [chatHistory, setChatHistory] = useState<object[]>([]);
+	const [ideaList, setIdeaList] = useState<Project[]>([]);
+	const [saveIdea, setSaveIdea] = useState(false);
 
 	return (
 		<BrowserRouter>
@@ -49,6 +51,8 @@ function App() {
 							<IdeaDetailsPage
 								projectIdea={projectIdea}
 								baseUrl={baseUrl}
+								setIdeaList={setIdeaList}
+								setSaveIdea={setSaveIdea}
 							/>
 						}
 					/>
@@ -79,6 +83,10 @@ function App() {
 							<UserProfile
 								baseUrl={baseUrl}
 								setState={setIsLoggedIn}
+								ideaList={ideaList}
+								setIdeaList={setIdeaList}
+								saveIdea={saveIdea}
+								setProjectIdea={setProjectIdea}
 							/>
 						}
 					/>

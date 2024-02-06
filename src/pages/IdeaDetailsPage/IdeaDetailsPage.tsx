@@ -1,17 +1,21 @@
-import { Project, UserInfo } from "../../utils/interfaces";
+import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./IdeaDetailsPage.scss";
 
 interface detailsPageProps {
 	projectIdea: Project;
 	baseUrl: string | undefined;
+	setIdeaList: React.Dispatch<React.SetStateAction<Project[]>>;
+	setSaveIdea: (arg0: boolean) => void;
 }
 
 export default function IdeaDetailsPage({
 	projectIdea,
 	baseUrl,
+	setIdeaList,
+	setSaveIdea,
 }: detailsPageProps) {
 	const [promptButtonText, setPromptButtonText] = useState("SAVE");
 	const [ideaButtonText, setIdeaButtonText] = useState("SAVE");
@@ -23,8 +27,20 @@ export default function IdeaDetailsPage({
 
 	const navigate = useNavigate();
 
+	const checkIdea = () => {
+		if (projectIdea.title.length <= 1) {
+			navigate("/idea");
+			return null;
+		}
+	};
+
+	useEffect(() => {
+		checkIdea();
+	}, []);
+
 	// SAVE PROMPTS TO PROFILE
 	const savePrompts = async () => {
+		//Navigate to login page if user has not logged in
 		if (!token) {
 			navigate("/user/login");
 			return;
@@ -53,6 +69,9 @@ export default function IdeaDetailsPage({
 
 	//SAVE IDEAS TO PROFILE
 	const saveIdeas = async () => {
+		setSaveIdea(true);
+		setIdeaList([projectIdea]);
+
 		if (!token) {
 			navigate("/user/login");
 			return;
