@@ -1,4 +1,4 @@
-import "./UserPage.scss";
+import "./LoginPage.scss";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserForm from "../../components/UserForm/UserForm";
@@ -11,7 +11,7 @@ interface UserPageProps {
 	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function UserPage({
+export default function LoginPage({
 	baseUrl,
 	setIsSignedUp,
 	setIsLoggedIn,

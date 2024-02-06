@@ -43,16 +43,15 @@ export default function UserForm(props: FormProps) {
 	const handleChange = (e: any) => {
 		const { name, value } = e.target;
 
-		setValues({
-			...values,
+		setValues((previousValues) => ({
+			...previousValues,
 			[name]: value,
-		});
+		}));
 
-		if (value.trim() === "") {
-			setErrors({ ...errors, [name]: "This field is required" });
-		} else {
-			setErrors({ ...errors, [name]: "" });
-		}
+		setErrors((previousErrors) => ({
+			...previousErrors,
+			[name]: value.trim() === "" ? "This field is required" : "",
+		}));
 
 		if (
 			(props.isSignUpForm && name === "password") ||
@@ -152,7 +151,7 @@ export default function UserForm(props: FormProps) {
 						<label className="form__label" htmlFor="password">
 							PASSWORD
 						</label>
-						{touched.password && errors.password && (
+						{errors.password && (
 							<p className="error-message">
 								{errors["password"]}
 							</p>
@@ -181,7 +180,7 @@ export default function UserForm(props: FormProps) {
 							>
 								RE-ENTER PASSWORD
 							</label>
-							{touched.password && errors.password && (
+							{errors.password && (
 								<p className="error-message">
 									{errors["passwordRepeat"]}
 								</p>

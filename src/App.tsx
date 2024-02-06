@@ -8,7 +8,7 @@ import IdeaPage from "./pages/GenerateIdeaPage/GenerateIdeaPage";
 import IdeaDetailsPage from "./pages/IdeaDetailsPage/IdeaDetailsPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import UserPage from "./pages/UserPage/UserPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import Signup from "./components/Signup/Signup";
 import UserProfile from "./components/UserProfile/UserProfile";
 
@@ -59,7 +59,7 @@ function App() {
 					<Route
 						path="/user/login"
 						element={
-							<UserPage
+							<LoginPage
 								baseUrl={baseUrl}
 								setIsSignedUp={setIsSignedUp}
 								setIsLoggedIn={setIsLoggedIn}

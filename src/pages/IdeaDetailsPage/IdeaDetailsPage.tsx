@@ -1,8 +1,8 @@
+import "./IdeaDetailsPage.scss";
+import axios from "axios";
 import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useState, useEffect } from "react";
-import "./IdeaDetailsPage.scss";
 
 interface detailsPageProps {
 	projectIdea: Project;
@@ -23,8 +23,8 @@ export default function IdeaDetailsPage({
 	const [ideaButtonText, setIdeaButtonText] = useState("SAVE");
 
 	const interests = localStorage.getItem("Interests");
-	const skills = localStorage.getItem("Skills");
-	const toggles = localStorage.getItem("Toggles");
+	const skills = localStorage.getItem("Skills")?.split(",");
+	const toggles = localStorage.getItem("Toggles")?.split(",");
 	const token = sessionStorage.getItem("JWT token");
 
 	const navigate = useNavigate();
@@ -70,15 +70,18 @@ export default function IdeaDetailsPage({
 	};
 
 	//SAVE IDEAS TO PROFILE
+	//adds the current idea to state, in order to be retrieved when user logs in
 	const saveIdeas = async () => {
 		setSaveIdea(true);
 		setIdeaList([projectIdea]);
 
+		// Navigate user to login page if not logged in
 		if (!token) {
 			navigate("/user/login");
 			return;
 		}
 
+		// Send POST idea request to database, returns the posted idea
 		try {
 			const response = await axios.post(
 				`${baseUrl}user/ideas`,

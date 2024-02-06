@@ -21,6 +21,7 @@ export default function UserProfile({
 	setProjectIdea,
 	setSaveIdea,
 }: UserComponentProps) {
+	// STATE VARIABLES
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [interestsList, setInterestsList] = useState<string[]>([]);
@@ -29,8 +30,10 @@ export default function UserProfile({
 		id: undefined,
 		name: "",
 	});
+	//NAVIGATION
 	const navigate = useNavigate();
 
+	//Function to check if user is logged in: checks for token, navigates to login if no token
 	const token: string | null = sessionStorage.getItem("JWT token");
 	const checkToken = () => {
 		if (!token) {
@@ -39,6 +42,41 @@ export default function UserProfile({
 		return null;
 	};
 
+	useEffect(() => {
+		console.log("Want to save idea:", saveIdea);
+		if (saveIdea === true) {
+			console.log("inside Save Idea");
+			const saveIdea = async () => {
+				console.log("INSIDE THE SAVE IDEA FUNCTION");
+				try {
+					const response = await axios.post(
+						`${baseUrl}user/ideas`,
+						{
+							title: ideaList[0].title,
+							description: ideaList[0].description,
+							requirements: ideaList[0].requirements,
+						},
+						{
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
+					setSaveIdea(false);
+					return console.log(
+						"Save Idea response data",
+						response.data
+					);
+				} catch (error) {
+					setErrorMessage(
+						`Unable to save idea to user profile: ${error}`
+					);
+				}
+			};
+		}
+	}, [saveIdea]);
+
+	// API CALLS FOR PROFILE INFORMATION
 	useEffect(() => {
 		checkToken();
 		const fetchUserProfile = async () => {
@@ -59,37 +97,6 @@ export default function UserProfile({
 				);
 			}
 		};
-
-		if (saveIdea === true) {
-			console.log("inside Save Idea");
-			setSaveIdea(false);
-			const saveIdea = async () => {
-				console.log("INSIDE THE FUNCTION");
-				try {
-					const response = await axios.post(
-						`${baseUrl}user/ideas`,
-						{
-							title: ideaList[0].title,
-							description: ideaList[0].description,
-							requirements: ideaList[0].requirements,
-						},
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-							},
-						}
-					);
-					return console.log(
-						"Save Idea response data",
-						response.data
-					);
-				} catch (error) {
-					setErrorMessage(
-						`Unable to save idea to user profile: ${error}`
-					);
-				}
-			};
-		}
 
 		const fetchPrompts = async () => {
 			try {
@@ -124,7 +131,16 @@ export default function UserProfile({
 				});
 				const ideas = response.data;
 				console.log(response.data);
-				setIdeaList(ideas);
+
+				// parse data into JSON object
+				const mappedIdeas = ideas.forEach((idea: any) => {
+					{
+						idea.requirements = JSON.parse(
+							idea.requirements.split(",")
+						);
+					}
+				});
+				setIdeaList(mappedIdeas);
 			} catch (error: any) {
 				setErrorMessage(
 					`There was an issue getting your saved ideas: ${error.response.data.message}`
@@ -210,7 +226,7 @@ export default function UserProfile({
 					</>
 				)}
 			</div>
-			<div className="profile__container">
+			<div className="profile__container profile__container--ideas">
 				<h3 className="profile__subheader">"My" Ideas</h3>
 				{!ideaList.length ? (
 					<p className="profile__note">

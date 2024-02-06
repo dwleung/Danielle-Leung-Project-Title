@@ -32,7 +32,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 		setSkills(event.target.value);
 	};
 
-	// Add or delete item from list of toggles
+	// Add or delete items from list of toggles
 	const handleToggle = (event: any) => {
 		const item = event.target.getAttribute("name");
 		const itemIndex: number = toggles.indexOf(item);
@@ -52,10 +52,10 @@ export default function IdeaPage(props: IdeaPageProps) {
 		}
 	};
 
-	//Navigation
+	//NAVIGATION
 	const navigate = useNavigate();
 
-	// DATABASE POST REQUESTS
+	//LOCAL STORAGE POST REQUESTS
 
 	const savePrompts = () => {
 		localStorage.setItem("Interests", interests);
@@ -70,38 +70,46 @@ export default function IdeaPage(props: IdeaPageProps) {
 	const getProjectIdea = async (e: any) => {
 		e.preventDefault();
 		savePrompts();
+		try {
+			console.log("chatHistory:", chatHistory);
+			// Add user request to chat history
+			const history = [
+				...chatHistory,
+				{
+					role: "user",
+					content: `Generate a software engineering project idea with detailed description and requirements. My interests are ${interests} and the skills I want to employ are ${skills} and ${toggles}`,
+				},
+			];
 
-		// Add user request to chat history
-		const history = [
-			...chatHistory,
-			{
-				role: "user",
-				content: `My interests are ${interests} and the skills I want to employ are ${skills} and ${toggles}`,
-			},
-		];
+			// Keep the chat history length at max 10 items, to reduce the amount of data sent to API
+			const shortHistory =
+				history.length > 10 ? history.slice(-10) : history;
 
-		// Keep the chat history length at max 10 items, to reduce the amount of data sent to API
-		const shortHistory =
-			history.length > 10 ? history.slice(-10) : history;
+			console.log("This is SHORT HISTORY:", shortHistory);
+			// Send API request with custom prompt & chat history
 
-		// Send API request with custom prompt & chat history
-		const response = await axios.post(`${baseUrl}openai/`, shortHistory);
+			const response = await axios.post(
+				`${baseUrl}openai`,
+				shortHistory
+			);
+			setIsLoading(true);
+			console.log("isloading is true", isLoading);
+			console.log("This is the response: ", response);
 
-		setIsLoading(true);
-		console.log("isloading is true", isLoading);
-		console.log("This is the response: ", response);
-
-		// Update chat history with API response
-		setChatHistory([
-			...shortHistory,
-			{
-				role: "assistant",
-				content: response.data.content,
-			},
-		]);
-		// Convert response to object for better rendering, and navigate to project details
-		setProjectIdea(JSON.parse(response.data.content));
-		navigate("/idea/details");
+			// Update chat history with API response
+			setChatHistory([
+				...shortHistory,
+				{
+					role: "assistant",
+					content: response.data.content,
+				},
+			]);
+			// Convert response to object for better rendering, and navigate to project details
+			setProjectIdea(JSON.parse(response.data.content));
+			navigate("/idea/details");
+		} catch (error) {
+			console.log(`Error generating new idea: ${error}`);
+		}
 	};
 
 	if (isLoading) {
