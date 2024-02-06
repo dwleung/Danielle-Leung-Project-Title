@@ -11,18 +11,18 @@ import blueArrow from "../../assets/icons/blueArrow.svg";
 interface IdeaPageProps {
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
 	baseUrl: string | undefined;
+	chatHistory: object[];
+	setChatHistory: React.Dispatch<React.SetStateAction<object[]>>;
 }
 
-export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
+export default function IdeaPage(props: IdeaPageProps) {
+	const { setProjectIdea, baseUrl, chatHistory, setChatHistory } = props;
+
 	// USER INPUT VALUES
 	const [interests, setInterests] = useState("");
 	const [skills, setSkills] = useState("");
 	const [toggles, setToggles] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-
-	// RECORD CHAT HISTORY TO IMPROVE RANDOMNESS OF RESPONSE
-	const [chatHistory, setChatHistory] = useState<object[]>([]);
-	const [customChatHistory, setCustomChatHistory] = useState<object[]>([]);
 
 	// CONTROLLED COMPONENTS FOR INPUT ELEMENTS
 	const handlechangeInterests = (event: { target: HTMLInputElement }) => {
@@ -67,60 +67,43 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 	// User input and API response is added into chat history, to decrease the chance of repeated responses from API
 	// Response strings are converted to objects before setting projectIdea
 
-	const getRandomProjectIdea = async (e: any) => {
-		e.preventDefault();
-		savePrompts();
+	// const getRandomProjectIdea = async (e: any) => {
+	// 	e.preventDefault();
+	// 	savePrompts();
+	// 	// Add the user input to chat history
+	// 	const history = [
+	// 		...chatHistory,
+	// 		{
+	// 			role: "user",
+	// 			content: "Suggest a different software engineering project.",
+	// 		},
+	// 	];
+	// 	console.log(history);
 
-		// Add the user input to chat history
-		const history = [
-			...chatHistory,
-			{
-				role: "user",
-				content: "Suggest a different software engineering project.",
-			},
-		];
+	// 	// API request with history
+	// 	const response = await axios.post(`${baseUrl}openai/`, history);
 
-		// Keep the chat history length at max 10 items, to reduce the amount of data sent to API
-		const shortHistory =
-			history.length > 10 ? history.slice(-1, -9) : history;
+	// 	setIsLoading(true);
+	// 	console.log("Line 94 isloading is true", isLoading);
+	// 	// Add new API response to chat history
+	// 	setChatHistory([
+	// 		...history,
+	// 		{
+	// 			role: "assistant",
+	// 			content: response.data.content,
+	// 		},
+	// 	]);
+	// 	setProjectIdea(JSON.parse(response.data.content));
+	// 	navigate("/idea/details");
+	// };
 
-		// API request with history
-		const responseString = await axios.post(
-			`${baseUrl}openai/`,
-			shortHistory
-		);
-
-		setIsLoading(true);
-		console.log("Line 94 isloading is true", isLoading);
-		// Add new API response to chat history
-		setChatHistory([
-			...shortHistory,
-			{
-				role: "assistant",
-				content: responseString.data.content,
-			},
-		]);
-
-		console.log(typeof responseString.data.content);
-		console.log(responseString.data.content);
-		if (typeof responseString.data.content === "string") {
-			// Convert response to object for better rendering, and navigate to project details
-			const responseObject = JSON.parse(responseString.data.content);
-			setProjectIdea(responseObject);
-			navigate("/idea/details");
-		} else {
-			console.log(responseString.data.content);
-			console.error("Incorrect response format");
-		}
-	};
-
-	const getCustomProjectIdea = async (e: any) => {
+	const getProjectIdea = async (e: any) => {
 		e.preventDefault();
 		savePrompts();
 
 		// Add user request to chat history
 		const history = [
-			...customChatHistory,
+			...chatHistory,
 			{
 				role: "user",
 				content: `My interests are ${interests} and the skills I want to employ are ${skills} and ${toggles}`,
@@ -129,29 +112,25 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 
 		// Keep the chat history length at max 10 items, to reduce the amount of data sent to API
 		const shortHistory =
-			history.length > 10 ? history.slice(-1, -9) : history;
+			history.length > 10 ? history.slice(-10) : history;
 
 		// Send API request with custom prompt & chat history
-		const responseString = await axios.post(
-			`http://localhost:8080/openai/custom`,
-			shortHistory
-		);
+		const response = await axios.post(`${baseUrl}openai/`, shortHistory);
 
 		setIsLoading(true);
 		console.log("isloading is true", isLoading);
-		console.log("This is the responseString: ", responseString);
+		console.log("This is the response: ", response);
 
 		// Update chat history with API response
-		setCustomChatHistory([
+		setChatHistory([
 			...shortHistory,
 			{
 				role: "assistant",
-				content: responseString.data.content,
+				content: response.data.content,
 			},
 		]);
 		// Convert response to object for better rendering, and navigate to project details
-		const responseObject = JSON.parse(responseString.data.content);
-		setProjectIdea(responseObject);
+		setProjectIdea(JSON.parse(response.data.content));
 		navigate("/idea/details");
 	};
 
@@ -173,14 +152,6 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 	return (
 		<div className="idea">
 			<h2 className="idea__title">IDEA</h2>
-			<div className="idea__container">
-				<p className="idea__subtitle">Give me a random idea! </p>
-				<img
-					className="idea__button"
-					src={blueArrow}
-					onClick={getRandomProjectIdea}
-				/>
-			</div>
 			<form className="idea__form">
 				<div className="idea__input-wrapper">
 					<p className="idea__input-prompt">
@@ -247,7 +218,13 @@ export default function IdeaPage({ setProjectIdea, baseUrl }: IdeaPageProps) {
 						</p>
 					</div>
 				</div>
-				<button onClick={getCustomProjectIdea}>CUSTOM IDEA</button>
+
+				<input
+					type="image"
+					className="idea__button"
+					src={blueArrow}
+					onClick={getProjectIdea}
+				/>
 			</form>
 		</div>
 	);

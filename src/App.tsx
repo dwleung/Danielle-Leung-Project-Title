@@ -24,6 +24,7 @@ function App() {
 
 	const [isSignedUp, setIsSignedUp] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [chatHistory, setChatHistory] = useState<object[]>([]);
 
 	return (
 		<BrowserRouter>
@@ -37,6 +38,8 @@ function App() {
 							<IdeaPage
 								setProjectIdea={setProjectIdea}
 								baseUrl={baseUrl}
+								chatHistory={chatHistory}
+								setChatHistory={setChatHistory}
 							/>
 						}
 					/>

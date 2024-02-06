@@ -19,8 +19,8 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [ideaList, setIdeaList] = useState<IdeaValues[]>([]);
-	// const [interestsList, setInterestsList] = useState([]);
-	// const [skillsList, setSkillsList] = useState([]);
+	const [interestsList, setInterestsList] = useState<string[]>([]);
+	const [skillsList, setSkillsList] = useState<string[]>([]);
 	const [userInfo, setUserInfo] = useState<UserInfo>({
 		id: undefined,
 		name: "",
@@ -56,30 +56,30 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			}
 		};
 
-		// const fetchPrompts = async () => {
-		// 	console.log("inside fetch prompts");
-		// 	try {
-		// 		const response = await axios.get(`${baseUrl}user/prompts`, {
-		// 			headers: {
-		// 				Authorization: `Bearer ${token}`,
-		// 			},
-		// 		});
-		// 		const prompts = response.data;
-		// 		console.log(prompts);
-		// 		prompts.forEach((element) => {
-		// 			const interests = element.interests.split(",").trim();
-		// 			setInterestsList([...interestsList, interests]);
-		// 			const skills = element.split(",").trim();
-		// 			setSkillsList([...skillsList, skills]);
-		// 			const toggles = element.split(",").trim();
-		// 			setSkillsList([...skillsList, toggles]);
-		// 		});
-		// 	} catch (error: any) {
-		// 		setErrorMessage(
-		// 			`There was an issue getting your saved prompts: ${error.response.data.message}`
-		// 		);
-		// 	}
-		// };
+		const fetchPrompts = async () => {
+			console.log("inside fetch prompts");
+			try {
+				const response = await axios.get(`${baseUrl}user/prompts`, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				const prompts = response.data;
+				console.log(prompts);
+				prompts.forEach((element: any) => {
+					const interests = element.interests.split(",");
+					setInterestsList(interests);
+					const skills = element.skills.split(",");
+					const toggles = element.toggles.split(",");
+					skills.push(toggles);
+					setSkillsList(skills);
+				});
+			} catch (error: any) {
+				setErrorMessage(
+					`There was an issue getting your saved prompts: ${error.response.data.message}`
+				);
+			}
+		};
 
 		const fetchIdeas = async () => {
 			try {
@@ -98,17 +98,9 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 		};
 
 		fetchUserProfile();
-		// fetchPrompts();
+		fetchPrompts();
 		fetchIdeas();
 	}, [token]);
-
-	// Fetch user's saved prompts
-	const interests = localStorage.getItem("Interests");
-	const interestsList = interests?.split(",");
-	const skills = localStorage.getItem("Skills");
-	const skillsList = skills?.split(",");
-	const toggles = localStorage.getItem("Toggles");
-	const togglesList = toggles?.split(",");
 
 	if (isLoading) {
 		<Typewriter
@@ -141,36 +133,36 @@ export default function UserProfile({ baseUrl, setState }: UserComponentProps) {
 			)}
 			<h2 className="profile__title">{userInfo.name}</h2>
 			<div className="profile__container">
-				<h4 className="profile__subheader">My Prompts</h4>
-				<div className="prompt__container">
-					<div className="prompt__wrapper">
-						<p>Interests</p>
-						{interestsList?.map((interest) => {
-							return (
-								<span className="prompt__item">
-									{interest.trim()}
-								</span>
-							);
-						})}
-					</div>
-					<div className="prompt__wrapper">
-						<p>Skills</p>
-						{skillsList?.map((skill) => {
-							return (
-								<span className="prompt__item">
-									{skill.trim()}
-								</span>
-							);
-						})}
-						{togglesList?.map((toggle) => {
-							return (
-								<span className="prompt__item">
-									{toggle.trim()}
-								</span>
-							);
-						})}
-					</div>
-				</div>
+				{interestsList && skillsList && (
+					<>
+						<div className="prompt">
+							<div className="prompt__wrapper">
+								<h4 className="prompt__category">
+									Interests:
+								</h4>
+								{interestsList?.map((interest) => {
+									return (
+										<span className="prompt__item">
+											{interest}
+										</span>
+									);
+								})}
+							</div>
+							<div className="prompt__wrapper">
+								<h4 className="prompt__category">
+									Skills:
+								</h4>
+								{skillsList?.map((skill) => {
+									return (
+										<span className="prompt__item">
+											{skill}
+										</span>
+									);
+								})}
+							</div>
+						</div>
+					</>
+				)}
 			</div>
 			<div className="profile__container">
 				<h3 className="profile__subheader">"My" Ideas</h3>

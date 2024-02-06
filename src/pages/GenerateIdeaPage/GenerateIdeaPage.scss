@@ -4,10 +4,13 @@
 @use "../../styles/partials/variables" as *;
 
 .idea {
-	margin: 5rem 1rem;
+	margin: 5rem 1rem 1rem 1rem;
 	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
+	position: relative;
+
 	&__title {
 		@include page-title;
 	}
@@ -18,10 +21,12 @@
 	}
 
 	&__button {
-		font-size: 1.5rem;
-		margin: 1rem;
 		width: 4rem;
 		height: 4rem;
+		margin-top: auto;
+		position: absolute;
+		bottom: 1rem;
+		right: 1rem;
 	}
 
 	&__form {
@@ -52,7 +57,13 @@
 		color: $primary-dark;
 		margin-top: 0.75rem;
 	}
+}
+.toggle {
+	&__wrapper {
+		display: flex;
+	}
 
-	&__toggles {
+	&__name {
+		margin-left: 0.5rem;
 	}
 }

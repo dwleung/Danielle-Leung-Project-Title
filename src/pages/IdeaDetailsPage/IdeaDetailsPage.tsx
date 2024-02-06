@@ -59,7 +59,6 @@ export default function IdeaDetailsPage({
 		}
 
 		try {
-			// const { title, description, requirements } = projectIdea;
 			const response = await axios.post(
 				`${baseUrl}user/ideas`,
 				{
@@ -83,26 +82,30 @@ export default function IdeaDetailsPage({
 	return (
 		<section className="idea-details-page">
 			<h2 className="idea-details-page__title">IDEA</h2>
-			<div className="prompt">
-				<p className="prompt__subtitle">
-					You chose to customize your idea with:
-				</p>
-				<div className="prompt__wrapper">
-					<h4>Interests:</h4>
-					<p>{interests}</p>
+			{interests && skills && (
+				<div className="prompt">
+					<p className="prompt__subtitle">
+						You customized your idea with:
+					</p>
+					<div className="prompt__wrapper">
+						<h4 className="prompt__category">Interests:</h4>
+						<p className="prompt__item">{interests}</p>
+					</div>
+					<div className="prompt__wrapper">
+						<h4 className="prompt__category">Skills:</h4>
+						<p className="prompt__item">
+							{skills}
+							{toggles}
+						</p>
+					</div>
+					<button
+						className="button prompt__button"
+						onClick={savePrompts}
+					>
+						{promptButtonText}
+					</button>
 				</div>
-				<div className="prompt__wrapper">
-					<h4>Skills:</h4>
-					<p>{skills}</p>
-					<p>{toggles}</p>
-				</div>
-				<button
-					className="button prompt__button"
-					onClick={savePrompts}
-				>
-					{promptButtonText}
-				</button>
-			</div>
+			)}
 
 			<div className="details">
 				<div className="details__wrapper">
@@ -126,20 +129,13 @@ export default function IdeaDetailsPage({
 					{projectIdea.requirements.map((item) => {
 						return (
 							<li
-								key={Math.floor(Math.random())}
+								key={Math.random()}
 								className="details__content"
 							>
-								{item.toString().split(":")[1]}
+								{item}
 							</li>
 						);
 					})}
-
-					<li className="details__content">
-						{projectIdea.requirements[1]}
-					</li>
-					<li className="details__content">
-						{projectIdea.requirements[2]}
-					</li>
 				</ul>
 				<button className="button" onClick={saveIdeas}>
 					{ideaButtonText}
