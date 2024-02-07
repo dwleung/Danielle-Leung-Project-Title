@@ -83,6 +83,10 @@ Form to sign up or log in.
 Accessed via Nav, this component lists the user's saved ideas.
 ![Mobile view of user profile page that lists saved ideas](src/assets/images/profile-mobile.png)
 
+## Visuals
+
+<img src="src/assets/images/home-mobile.png" alt="Mobile view of homepage" style="width: 5rem">
+
 ## Roadmap
 
 _Sprint 1: Set foundation_

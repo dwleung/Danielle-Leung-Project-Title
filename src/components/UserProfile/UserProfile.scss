@@ -35,6 +35,10 @@
 
 		&--ideas {
 			overflow-y: scroll;
+
+			@include tablet {
+				overflow-y: auto;
+			}
 		}
 	}
 
