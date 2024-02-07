@@ -1,6 +1,8 @@
 import "./IdeaDetailsPage.scss";
 import axios from "axios";
 import checkmark from "../../assets/icons/checkmark.svg";
+import orangeArrow from "../../assets/icons/orangeArrow.svg";
+import redo from "../../assets/icons/redo.svg";
 import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -18,10 +20,7 @@ export default function IdeaDetailsPage({
 	setIdeaList,
 	setSaveIdea,
 }: detailsPageProps) {
-	console.log("project idea: ", projectIdea);
-	console.log("typeof Project idea req", typeof projectIdea.requirements);
-	const [promptButtonText, setPromptButtonText] = useState("SAVE");
-	const [ideaButtonText, setIdeaButtonText] = useState("SAVE");
+	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
 	const interests = localStorage.getItem("Interests");
 	const skills = localStorage.getItem("Skills")?.split(",");
@@ -64,7 +63,6 @@ export default function IdeaDetailsPage({
 				}
 			);
 			console.log(response.data);
-			setPromptButtonText("SAVED!");
 		} catch (error) {
 			console.log(`Unable to save prompts to user profile: ${error}`);
 		}
@@ -98,7 +96,7 @@ export default function IdeaDetailsPage({
 				}
 			);
 			console.log(response.data);
-			setIdeaButtonText("SAVED!");
+			setIsButtonClicked(true);
 		} catch (error) {
 			console.log(`Unable to save idea to user profile: ${error}`);
 		}
@@ -141,12 +139,34 @@ export default function IdeaDetailsPage({
 						  })}
 				</ul>
 			</div>
-			<img
-				className="save-button"
-				onClick={saveIdeas}
-				src={checkmark}
-				alt="checkmark on orange circle"
-			/>
+			<div className="button__wrapper">
+				<img
+					className="button__navigate"
+					onClick={() => {
+						navigate(-1);
+					}}
+					src={orangeArrow}
+					alt="arrow pointing left to go back"
+				/>
+				<img
+					className="button__redo"
+					src={redo}
+					alt="redo arrow on blue background"
+				/>
+				<img
+					className={`button__save ${
+						isButtonClicked ? "button__save--disabled" : ""
+					}`}
+					onClick={saveIdeas}
+					src={checkmark}
+					alt="checkmark to save"
+					style={{
+						cursor: isButtonClicked
+							? "not-allowed"
+							: "pointer",
+					}}
+				/>
+			</div>
 		</section>
 	);
 }

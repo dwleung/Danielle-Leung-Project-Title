@@ -17,7 +17,7 @@
 	background-color: $primary-accessory;
 	color: $white;
 	font-weight: 600;
-	height: 2.5rem;
+	min-height: 2.5rem;
 
 	@include tablet {
 		width: 6.5rem;

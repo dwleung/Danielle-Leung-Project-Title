@@ -63,6 +63,7 @@
 
 	&__header {
 		color: $secondary-dark;
+		margin-bottom: 1rem;
 	}
 
 	&__content {
@@ -71,9 +72,26 @@
 	}
 }
 
-.save-button {
-	height: 3rem;
-	width: 3rem;
-	z-index: 2;
-	margin-left: auto;
+.button {
+	&__wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__save {
+		height: 3rem;
+		width: 3rem;
+		z-index: 2;
+
+		&--disabled {
+			filter: grayscale(1);
+		}
+	}
+
+	&__navigate {
+		transform: rotate(0.5turn);
+		height: 3rem;
+		width: 3rem;
+	}
 }
