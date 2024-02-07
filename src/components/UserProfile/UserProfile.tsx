@@ -42,7 +42,6 @@ export default function UserProfile({
 		return null;
 	};
 
-	console.log(ideaList);
 	useEffect(() => {
 		console.log("Want to save idea:", saveIdea);
 		if (saveIdea === true) {

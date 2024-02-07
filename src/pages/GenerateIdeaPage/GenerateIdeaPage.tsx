@@ -57,7 +57,6 @@ export default function IdeaPage(props: IdeaPageProps) {
 	const navigate = useNavigate();
 
 	//LOCAL STORAGE POST REQUESTS
-
 	const savePrompts = () => {
 		localStorage.setItem("Interests", interests);
 		localStorage.setItem("Skills", skills);
