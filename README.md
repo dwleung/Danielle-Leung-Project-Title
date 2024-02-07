@@ -79,87 +79,6 @@ Accessed via Nav, this component lists the user's saved ideas.
 Minimalist, bold, fun, easy & familiar user navigation
 ![Wireframe of the home screen, custom idea page, and menu page](./src/assets/images/wireframe.png)
 
-### Data
-
-The ideas generated will not be stored unless the user logs in and saves them.
-
-_USER TABLE_ stores username & password
-
-_IDEAS TABLE_ stores project title, description, requirements, and mockup image
-
-_PROMPTS TABLE_ stores user inputs of interests and skills so they don't have to redo the custom idea form
-
-![Three sample tables showing users, ideas, and prompts](./src/assets/images/database-tables.png)
-
-### Endpoints
-
-**GET /openai** - to openAI API
-
-Get random idea.
-
-     Response:
-     ```
-     {
-          "title": "Project Title",
-          "description": "Build a website that generates software engineering project briefs for software engineering students",
-          "requirements": [
-               "Generate new idea when button is pressed",
-               "Use an API"
-          ]
-     }
-     ```
-
-**POST /user/signup** - to SERVER
-
-Add a user account
-
-     Parameters:
-     - name: User's name
-     - username: User's username
-     - password: User's provided password
-
-     Response:
-
-     ```
-     {
-          "token":
-               "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.
-               eyJ2ZXJzaW9uIjoxNiwibmFtZSI6IkRhbmllbGxlIExldW..."
-     }
-     ```
-
-**POST /user/login** - to SERVER - Login a user
-
-     Parameters:
-     - username: User's username,
-     - password: user's password
-
-     Response:
-
-      ```
-     {
-          "token":
-               "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.
-               eyJ2ZXJzaW9uIjoxNiwibmFtZSI6IkRhbmllbGxlIExldW..."
-     }
-     ```
-
-**POST /user/ideas** - to SERVER - User saves an idea
-
-     Parameters:
-     token: JWT of logged in user
-     idea: Idea that user wants to save
-
-     Response:
-     ```
-     {
-          "id": 1,
-          "idea": "Some idea that is just magnificent"
-     }
-     ```
-
-### Auth
-
 The function of the random idea and custom idea generation is accessible by any user.
 JWT auth only required for saving ideas.
 
@@ -178,27 +97,20 @@ _Sprint 2: Test API & database_
 
      - Test prompt generation with React app
 
-_Feature: Home page_
+_Feature: Idea Page_
 
      - GET request to chatGPT
-
-_Feature: Custom Idea page_
-
-     - GET request to chatGPT
-
-_Feature: Menu page_
 
 _Feature: User sign up_
 
 -    POST request for new user
--    Implement auth with JWT tokens
--    Test edge cases
 -    Create sign up page & form
 
 _Feature: User log in_
 
 -    POST request with user information
--    Create auth token
+-    Implement auth with JWT token
+-    Test edge cases
 -    Create log in page & form
 
 _Feature: Save idea_
@@ -209,14 +121,12 @@ _Feature: Save idea_
 ## Nice-to-haves
 
 **Future features:**
+
 **Generate mockup:** Use current idea to generate a desktop mockup, eliminating visual design paralysis
+
 **Edit idea:** Logged in user can edit saved ideas
 
 **Add idea:** Logged in user can add their own idea to the list
-
-As a logged in user, I want to be able to add an additional challenge to my project idea
-
-As a logged in user, I want to be able to save my "word cloud" so that I don't have to re-input them
 
 As a logged in user, I want to be able to generate a basic Readme file for my project
 
