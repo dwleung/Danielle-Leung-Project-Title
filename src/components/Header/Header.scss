@@ -3,24 +3,31 @@
 @use "../../styles/partials/typography" as *;
 @use "../../styles/partials/variables" as *;
 
+.background {
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	border-bottom: 0.2rem solid $secondary-accessory;
+}
+
 .header {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	position: fixed;
-	top: 0;
+	align-items: center;
 	padding: 1rem;
-	width: 100%;
-	background-color: $white;
+
 	z-index: 2;
 
 	@include tablet {
 		padding: 1rem 2.25rem;
 		margin: 0 auto;
+		width: 100%;
 	}
 
 	@include desktop {
 		@include content-width;
+		margin: 0 auto;
 	}
 
 	&__nav {
@@ -28,11 +35,11 @@
 	}
 
 	&__link {
-		font-size: 0.75rem;
+		font-size: 1rem;
 		font-weight: 400;
 		color: $primary-dark;
 		text-decoration: none;
-		margin-right: 0.5rem;
+		margin-right: 0.75rem;
 
 		&--active {
 			color: $primary-accessory;
@@ -51,7 +58,7 @@
 
 	&__logo {
 		width: 3rem;
-		align-self: flex-end;
+		vertical-align: bottom;
 
 		@include tablet {
 			width: 5rem;
