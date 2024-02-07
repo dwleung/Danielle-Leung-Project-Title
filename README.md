@@ -55,12 +55,12 @@ Connects to ideally-API:
 **HOMEPAGE**
 A visually bold landing page to capture the users' attention, with one-click navigation to the ideas page. Can navigate to User Login or Idea Page.
 
-![Mobile view of homepage](assets/images/home-mobile.png)
+![Mobile view of homepage](.src/assets/images/home-mobile.png)
 
 **IDEA PAGE**
 
 User enters information on their interests and skill to apply to the project, and clicks to generate a custom idea. They can save idea if they are logged in.
-![Mobile view of idea page](assets/images/ideapage-mobile.png)
+![Mobile view of idea page](.src/assets/images/ideapage-mobile.png)
 
 **IDEA DETAILS PAGE**
 
@@ -68,7 +68,7 @@ Displays idea details, navigated to automatically after idea is generated. User 
 
 Includes: Project title, project description, project requirements.
 
-![Mobile view of idea details page](assets/images/ideadetails-mobile.png)
+![Mobile view of idea details page](.src/assets/images/ideadetails-mobile.png)
 
 **USER LOGIN**
 
@@ -76,12 +76,12 @@ Form to sign up or log in.
 
 "Log In" takes user to their saved ideas.
 
-![Mobile view of login page](assets/images/login-mobile.png)
+![Mobile view of login page](.src/assets/images/login-mobile.png)
 
 **PROFILE PAGE**
 
 Accessed via Nav, this component lists the user's saved ideas.
-![Mobile view of user profile page that lists saved ideas](assets/images/profile-mobile.png)
+![Mobile view of user profile page that lists saved ideas](.src/assets/images/profile-mobile.png)
 
 ## Roadmap
 
