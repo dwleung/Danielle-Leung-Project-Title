@@ -104,8 +104,6 @@ export default function IdeaDetailsPage({
 
 	return (
 		<section className="idea-details-page">
-			<h2 className="idea-details-page__title">IDEA</h2>
-
 			<div className="details">
 				<div className="details__wrapper details__wrapper--title">
 					<h3 className="details__title">{projectIdea.title}</h3>
