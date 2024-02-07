@@ -51,9 +51,14 @@
 
 	&__wrapper {
 		margin-bottom: 1rem;
+
+		&--title {
+			display: flex;
+		}
 	}
 	&__title {
 		@include page-title;
+		flex-grow: 1;
 	}
 
 	&__header {
@@ -64,4 +69,11 @@
 		margin-bottom: 1rem;
 		list-style-type: none;
 	}
+}
+
+.save-button {
+	height: 3rem;
+	width: 3rem;
+	z-index: 2;
+	margin-left: auto;
 }

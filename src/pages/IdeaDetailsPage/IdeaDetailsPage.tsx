@@ -1,5 +1,6 @@
 import "./IdeaDetailsPage.scss";
 import axios from "axios";
+import checkmark from "../../assets/icons/checkmark.svg";
 import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -106,33 +107,9 @@ export default function IdeaDetailsPage({
 	return (
 		<section className="idea-details-page">
 			<h2 className="idea-details-page__title">IDEA</h2>
-			{interests && skills && (
-				<div className="prompt">
-					<p className="prompt__subtitle">
-						You customized your idea with:
-					</p>
-					<div className="prompt__wrapper">
-						<h4 className="prompt__category">Interests:</h4>
-						<p className="prompt__item">{interests}</p>
-					</div>
-					<div className="prompt__wrapper">
-						<h4 className="prompt__category">Skills:</h4>
-						<p className="prompt__item">
-							{skills}
-							{toggles}
-						</p>
-					</div>
-					<button
-						className="button prompt__button"
-						onClick={savePrompts}
-					>
-						{promptButtonText}
-					</button>
-				</div>
-			)}
 
 			<div className="details">
-				<div className="details__wrapper">
+				<div className="details__wrapper details__wrapper--title">
 					<h3 className="details__title">{projectIdea.title}</h3>
 				</div>
 
@@ -163,10 +140,13 @@ export default function IdeaDetailsPage({
 								);
 						  })}
 				</ul>
-				<button className="button" onClick={saveIdeas}>
-					{ideaButtonText}
-				</button>
 			</div>
+			<img
+				className="save-button"
+				onClick={saveIdeas}
+				src={checkmark}
+				alt="checkmark on orange circle"
+			/>
 		</section>
 	);
 }

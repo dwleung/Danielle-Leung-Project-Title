@@ -130,9 +130,8 @@ export default function UserProfile({
 					},
 				});
 				const ideas = response.data;
-				console.log(response.data);
 
-				// parse data into JSON object
+				// Parse "requirements" which is stored as string in database
 				ideas.forEach((idea: any) => {
 					{
 						idea.requirements = JSON.parse(
@@ -193,7 +192,7 @@ export default function UserProfile({
 					<>
 						<div className="prompt">
 							<div className="prompt__wrapper">
-								<h4 className="prompt__category">
+								<h4 className="prompt__subtitle">
 									Interests:
 								</h4>
 								{interestsList?.map((interest) => {
@@ -208,7 +207,7 @@ export default function UserProfile({
 								})}
 							</div>
 							<div className="prompt__wrapper">
-								<h4 className="prompt__category">
+								<h4 className="prompt__subtitle">
 									Skills:
 								</h4>
 								{skillsList?.map((skill) => {
