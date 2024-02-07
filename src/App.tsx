@@ -73,6 +73,7 @@ function App() {
 							<Signup
 								baseUrl={baseUrl}
 								setState={setIsSignedUp}
+								setIsLoggedIn={setIsLoggedIn}
 							/>
 						}
 					/>

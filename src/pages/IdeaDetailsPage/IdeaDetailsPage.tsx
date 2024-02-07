@@ -80,6 +80,7 @@ export default function IdeaDetailsPage({
 			return;
 		}
 
+		console.log("Project Idea: ", projectIdea);
 		// Send POST idea request to database, returns the posted idea
 		try {
 			const response = await axios.post(

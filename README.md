@@ -38,10 +38,6 @@ Software developers:
      -    react-router-dom
      -    axios
      -    typewriter
--    Server libraries:
-     -    knex
-     -    express
-     -    jsonwebtoken
 
 ### APIs
 

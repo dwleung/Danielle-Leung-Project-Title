@@ -7,9 +7,14 @@ import "./Signup.scss";
 interface SignupProps {
 	baseUrl: string | undefined;
 	setState: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Signup({ baseUrl, setState }: SignupProps) {
+export default function Signup({
+	baseUrl,
+	setState,
+	setIsLoggedIn,
+}: SignupProps) {
 	const signupUrl = `${baseUrl}user/signup`;
 	const [errorMessage, setErrorMessage] = useState("");
 	const [isSignupError, setIsSignupError] = useState(false);
@@ -19,7 +24,7 @@ export default function Signup({ baseUrl, setState }: SignupProps) {
 		e.preventDefault();
 
 		try {
-			await axios.post(signupUrl, {
+			const response = await axios.post(signupUrl, {
 				username: e.target.username.value,
 				name: e.target.name.value,
 				password: e.target.password.value,
@@ -27,7 +32,10 @@ export default function Signup({ baseUrl, setState }: SignupProps) {
 			setState(true);
 			setIsSignupError(false);
 			console.log("You've successfully signed up!");
-			navigate("/user/login");
+			console.log(response.data);
+			sessionStorage.setItem("JWT token", response.data.token);
+			setIsLoggedIn(true);
+			navigate("/user");
 		} catch (error: any) {
 			setIsSignupError(true);
 			setErrorMessage(
