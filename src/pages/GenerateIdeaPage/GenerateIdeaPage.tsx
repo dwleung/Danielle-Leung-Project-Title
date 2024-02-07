@@ -7,6 +7,7 @@ import Toggle from "../../components/Toggle/Toggle";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
 import blueArrow from "../../assets/icons/blueArrow.svg";
+import orangeArrow from "../../assets/icons/orangeArrow.svg";
 
 interface IdeaPageProps {
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
@@ -196,14 +197,23 @@ export default function IdeaPage(props: IdeaPageProps) {
 						</p>
 					</div>
 				</div>
-
-				<input
-					type="image"
-					className="idea__button"
-					src={blueArrow}
-					onClick={getProjectIdea}
-					alt="blue arrow pointing right for submit function"
-				/>
+				<div className="button__wrapper">
+					<img
+						className="button__navigate"
+						onClick={() => {
+							navigate(-1);
+						}}
+						src={orangeArrow}
+						alt="arrow pointing left to go back"
+					/>
+					<input
+						type="image"
+						className="idea__button"
+						src={blueArrow}
+						onClick={getProjectIdea}
+						alt="blue arrow pointing right for submit function"
+					/>
+				</div>
 			</form>
 		</div>
 	);

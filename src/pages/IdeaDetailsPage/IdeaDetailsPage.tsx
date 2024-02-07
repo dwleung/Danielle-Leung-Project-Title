@@ -160,11 +160,6 @@ export default function IdeaDetailsPage({
 					onClick={saveIdeas}
 					src={checkmark}
 					alt="checkmark to save"
-					style={{
-						cursor: isButtonClicked
-							? "not-allowed"
-							: "pointer",
-					}}
 				/>
 			</div>
 		</section>

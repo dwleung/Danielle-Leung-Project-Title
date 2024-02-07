@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import orangeArrow from "../../assets/icons/orangeArrow.svg";
 import axios from "axios";
@@ -42,10 +42,13 @@ export default function UserProfile({
 		return null;
 	};
 
+	console.log(ideaList);
 	useEffect(() => {
 		console.log("Want to save idea:", saveIdea);
 		if (saveIdea === true) {
 			console.log("inside Save Idea");
+			console.log(ideaList[0]);
+
 			const saveIdea = async () => {
 				console.log("INSIDE THE SAVE IDEA FUNCTION");
 				try {
@@ -65,7 +68,7 @@ export default function UserProfile({
 					setSaveIdea(false);
 					return console.log(
 						"Save Idea response data",
-						response.data
+						response
 					);
 				} catch (error) {
 					setErrorMessage(
@@ -73,11 +76,14 @@ export default function UserProfile({
 					);
 				}
 			};
+			console.log("Calling save idea");
+			saveIdea();
 		}
-	}, [saveIdea]);
+	}, []);
 
 	// API CALLS FOR PROFILE INFORMATION
 	useEffect(() => {
+		console.log("INSIDE SECOND USE EFFECT");
 		checkToken();
 		const fetchUserProfile = async () => {
 			try {
