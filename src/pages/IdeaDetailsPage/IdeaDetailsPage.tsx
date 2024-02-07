@@ -149,11 +149,6 @@ export default function IdeaDetailsPage({
 					alt="arrow pointing left to go back"
 				/>
 				<img
-					className="button__redo"
-					src={redo}
-					alt="redo arrow on blue background"
-				/>
-				<img
 					className={`button__save ${
 						isButtonClicked ? "button__save--disabled" : ""
 					}`}
