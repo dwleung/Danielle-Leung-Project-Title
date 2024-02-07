@@ -13,6 +13,10 @@
 	height: 100%;
 	margin: 1rem auto 0;
 
+	@include tablet {
+		height: auto;
+	}
+
 	&__title {
 		@include page-title;
 	}
@@ -23,6 +27,11 @@
 
 	&__button-wrapper {
 		margin-top: auto;
+
+		@include tablet {
+			margin-top: 1.5rem;
+			gap: 1rem;
+		}
 	}
 
 	&__label-wrapper {
@@ -36,6 +45,10 @@
 
 	button {
 		margin-bottom: 1rem;
+
+		@include tablet {
+			margin-right: 1rem;
+		}
 	}
 }
 

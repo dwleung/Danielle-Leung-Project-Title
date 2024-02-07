@@ -1,13 +1,14 @@
 import "./GenerateIdeaPage.scss";
-import React, { useState } from "react";
-import axios from "axios";
-import { Project } from "../../utils/interfaces";
-import { useNavigate } from "react-router-dom";
+import "../../styles/typewriter.scss";
 import Toggle from "../../components/Toggle/Toggle";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
 import blueArrow from "../../assets/icons/blueArrow.svg";
 import orangeArrow from "../../assets/icons/orangeArrow.svg";
+import React, { useState } from "react";
+import axios from "axios";
+import { Project } from "../../utils/interfaces";
+import { useNavigate } from "react-router-dom";
 
 interface IdeaPageProps {
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
@@ -23,7 +24,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 	const [interests, setInterests] = useState("");
 	const [skills, setSkills] = useState("");
 	const [toggles, setToggles] = useState<string[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
 	// CONTROLLED COMPONENTS FOR INPUT ELEMENTS
 	const handlechangeInterests = (event: { target: HTMLInputElement }) => {
@@ -106,29 +107,36 @@ export default function IdeaPage(props: IdeaPageProps) {
 			]);
 			// Convert response to object for better rendering, and navigate to project details
 			setProjectIdea(JSON.parse(response.data.content));
+			setIsLoading(false);
 			navigate("/idea/details");
 		} catch (error) {
 			console.log(`Error generating new idea: ${error}`);
 		}
 	};
 
-	if (isLoading) {
-		<Typewriter
-			options={options}
-			onInit={(typewriter: any) => {
-				loadingText.forEach(() => {
-					typewriter
-						.typeString(getRandomText())
-						.pauseFor(1500)
-						.deleteAll();
-				});
-				typewriter.start();
-			}}
-		/>;
-	}
-
 	return (
 		<div className="idea">
+			{isLoading === true && (
+				<div
+					id="loading-modal"
+					className={`modal ${
+						isLoading === true ? "modal--show" : ""
+					}`}
+				>
+					<Typewriter
+						options={options}
+						onInit={(typewriter: any) => {
+							loadingText.forEach(() => {
+								typewriter
+									.typeString(getRandomText())
+									.pauseFor(1500)
+									.deleteAll();
+							});
+							typewriter.start();
+						}}
+					/>
+				</div>
+			)}
 			<h2 className="idea__title">IDEA</h2>
 			<form className="idea__form">
 				<div className="idea__input-wrapper">

@@ -46,9 +46,6 @@
 	border: none;
 	text-wrap: wrap;
 
-	@include tablet {
-		width: 6.5rem;
-	}
 	&--focus {
 		border: 0.063rem solid $secondary-dark;
 	}

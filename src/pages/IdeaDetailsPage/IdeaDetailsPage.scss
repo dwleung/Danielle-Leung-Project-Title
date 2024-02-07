@@ -9,11 +9,16 @@
 	flex-direction: column;
 	position: relative;
 	height: 100vh;
+	@include content-width;
 
 	&__title {
 		@include page-title;
 	}
+	@include desktop {
+		height: 100%;
+	}
 }
+
 .prompt {
 	display: flex;
 	flex-direction: column;

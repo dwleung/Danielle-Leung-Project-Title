@@ -1,9 +1,9 @@
 import React from "react";
 import Typewriter from "typewriter-effect";
 import "./HomePage.scss";
-import arrowIcon from "../../assets/icons/arrow.svg";
-import { useNavigate } from "react-router-dom";
+import orangeArrow from "../../assets/icons/orangeArrow.svg";
 import ideallyLogo from "../../assets/logo/ideally-logo.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
 	const navigate = useNavigate();
@@ -55,7 +55,7 @@ export default function HomePage() {
 			<div className="home__cta-wrapper">
 				<img
 					className="icon home__cta"
-					src={arrowIcon}
+					src={orangeArrow}
 					alt="button with arrow pointing downwards"
 					onClick={() => {
 						navigate("/idea");

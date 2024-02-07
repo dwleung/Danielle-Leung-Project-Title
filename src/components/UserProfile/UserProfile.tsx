@@ -192,71 +192,77 @@ export default function UserProfile({
 				<div className="profile__error-message">{errorMessage}</div>
 			)}
 			<h2 className="profile__title">{userInfo.name}</h2>
-			<div className="profile__container">
-				{interestsList && skillsList && (
-					<>
-						<div className="prompt">
-							<div className="prompt__wrapper">
-								<h4 className="prompt__subtitle">
-									Interests:
-								</h4>
-								{interestsList?.map((interest) => {
-									return (
-										<span
-											key={Math.random()}
-											className="prompt__item"
-										>
-											{interest}
-										</span>
-									);
-								})}
+			<section className="profile__section">
+				<div className="profile__container">
+					{interestsList && skillsList && (
+						<>
+							<div className="prompt">
+								<div className="prompt__wrapper">
+									<h4 className="prompt__subtitle">
+										Interests:
+									</h4>
+									{interestsList?.map((interest) => {
+										return (
+											<span
+												key={Math.random()}
+												className="prompt__item"
+											>
+												{interest}
+											</span>
+										);
+									})}
+								</div>
+								<div className="prompt__wrapper">
+									<h4 className="prompt__subtitle">
+										Skills:
+									</h4>
+									{skillsList?.map((skill) => {
+										return (
+											<span
+												key={Math.random()}
+												className="prompt__item"
+											>
+												{skill}
+											</span>
+										);
+									})}
+								</div>
 							</div>
-							<div className="prompt__wrapper">
-								<h4 className="prompt__subtitle">
-									Skills:
-								</h4>
-								{skillsList?.map((skill) => {
-									return (
-										<span
-											key={Math.random()}
-											className="prompt__item"
-										>
-											{skill}
-										</span>
-									);
-								})}
-							</div>
-						</div>
-					</>
-				)}
-			</div>
-			<div className="profile__container profile__container--ideas">
-				<h3 className="profile__subheader">"My" Ideas</h3>
-				{!ideaList.length ? (
-					<p className="profile__note">
-						You don't have any saved ideas yet!
-					</p>
-				) : (
-					""
-				)}
+						</>
+					)}
+				</div>
+				<div className="profile__container profile__container--ideas">
+					<h3 className="profile__subheader">"My" Ideas</h3>
+					{!ideaList.length ? (
+						<p className="profile__note">
+							You don't have any saved ideas yet!
+						</p>
+					) : (
+						""
+					)}
 
-				{ideaList.map((idea) => {
-					return (
-						<div
-							key={idea.id}
-							className="profile__idea-wrapper"
-						>
-							<p className="profile__idea">{idea.title}</p>
-							<img
-								className="profile__idea-button"
-								onClick={() => handleClickIdea(idea)}
-								src={orangeArrow}
-								alt="orange arrow pointing right"
-							/>
-						</div>
-					);
-				})}
-			</div>
+					{ideaList.map((idea) => {
+						return (
+							<div
+								key={idea.id}
+								className="profile__idea-wrapper"
+							>
+								<p className="profile__idea">
+									{idea.title}
+								</p>
+								<img
+									className="profile__idea-button"
+									onClick={() =>
+										handleClickIdea(idea)
+									}
+									src={orangeArrow}
+									alt="orange arrow pointing right"
+								/>
+							</div>
+						);
+					})}
+				</div>
+			</section>
 			<button
 				className="button button--cancel profile__button"
 				onClick={handleLogout}

@@ -10,11 +10,28 @@
 	display: flex;
 	flex-direction: column;
 
+	@include tablet {
+		@include content-width;
+		height: auto;
+	}
+
+	&__section {
+		@include tablet {
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+			gap: 1rem;
+		}
+	}
+
 	&__container {
 		margin-top: 1rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
+		@include tablet {
+			flex-grow: 1;
+		}
 
 		&--ideas {
 			overflow-y: scroll;
@@ -46,6 +63,9 @@
 
 	&__button {
 		margin-top: auto;
+		@include tablet {
+			margin-top: 1.5rem;
+		}
 	}
 
 	&__idea {
