@@ -77,11 +77,11 @@ Accessed via Nav, this component lists the user's saved ideas.
 
 ## Visuals
 
-<img src="src/assets/images/home-mobile.png" alt="Mobile view of homepage" style="width: 5rem">
-<img src="src/assets/images/ideapage-mobile.png" alt="Mobile view of idea page" style="width: 5rem">
-<img src="src/assets/images/ideadetails-mobile.png" alt="Mobile view of idea details" style="width: 5rem">
-<img src="src/assets/images/login-mobile.png" alt="Mobile view of login page" style="width: 5rem">
-<img src="src/assets/images/profile-mobile.png" alt="Mobile view of user profile page that lists saved ideas" style="width: 5rem">
+<img src="src/assets/images/home-mobile.png" alt="Mobile view of homepage" style="width: 5rem; display: inline">
+<img src="src/assets/images/ideapage-mobile.png" alt="Mobile view of idea page" style="width: 5rem; display: inline">
+<img src="src/assets/images/ideadetails-mobile.png" alt="Mobile view of idea details" style="width: 5rem; display: inline">
+<img src="src/assets/images/login-mobile.png" alt="Mobile view of login page" style="width: 5rem; display: inline">
+<img src="src/assets/images/profile-mobile.png" alt="Mobile view of user profile page that lists saved ideas" style="width: 5rem; display: inline">
 
 ## Roadmap
 
