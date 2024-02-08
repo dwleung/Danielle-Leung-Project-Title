@@ -13,6 +13,7 @@
 	@include tablet {
 		@include content-width;
 		width: 50%;
+		margin: 0 auto;
 	}
 
 	&__wrapper {
