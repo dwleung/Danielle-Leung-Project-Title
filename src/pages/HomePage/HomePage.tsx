@@ -56,7 +56,7 @@ export default function HomePage() {
 				<img
 					className="icon home__cta"
 					src={orangeArrow}
-					alt="button with arrow pointing downwards"
+					alt="button with arrow pointing right"
 					onClick={() => {
 						navigate("/idea");
 					}}

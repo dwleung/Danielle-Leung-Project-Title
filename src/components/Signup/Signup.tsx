@@ -20,6 +20,7 @@ export default function Signup({
 	const [isSignupError, setIsSignupError] = useState(false);
 	const navigate = useNavigate();
 
+	// SIGN UP & LOG IN
 	const handleSignup = async (e: any) => {
 		e.preventDefault();
 		try {
@@ -28,8 +29,10 @@ export default function Signup({
 				name: e.target.name.value,
 				password: e.target.password.value,
 			});
+			// setState is a prop "isSignedUp()"
 			setState(true);
 			setIsSignupError(false);
+			// store JWT token & log in
 			sessionStorage.setItem("JWT token", response.data.token);
 			setIsLoggedIn(true);
 			navigate("/user");

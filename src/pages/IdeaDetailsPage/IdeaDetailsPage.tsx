@@ -21,7 +21,7 @@ export default function IdeaDetailsPage({
 }: detailsPageProps) {
 	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
-	// Retrieve the prompts that were just used
+	// Retrieve prompts used for the current idea
 	const interests = localStorage.getItem("Interests")?.split(",");
 	const skills = localStorage.getItem("Skills")?.split(",");
 	const toggles = localStorage.getItem("Toggles")?.split(",");
@@ -29,6 +29,7 @@ export default function IdeaDetailsPage({
 
 	const navigate = useNavigate();
 
+	// If no project idea is saved, navidate to idea form to generate new idea
 	const checkIdea = () => {
 		if (projectIdea.title.length <= 1) {
 			navigate("/idea");
@@ -43,6 +44,7 @@ export default function IdeaDetailsPage({
 	// SAVE PROMPTS TO PROFILE
 	const savePrompts = async () => {
 		setSaveIdea(true);
+
 		//Navigate to login page if user has not logged in
 		if (!token) {
 			navigate("/user/login");

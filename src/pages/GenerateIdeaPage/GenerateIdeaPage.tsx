@@ -112,7 +112,6 @@ export default function IdeaPage(props: IdeaPageProps) {
 		}
 	};
 
-	console.log("isLoading", isLoading);
 	return (
 		<div className="idea">
 			{isLoading === true && (

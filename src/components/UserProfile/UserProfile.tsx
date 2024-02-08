@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import "./UserProfile.scss";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import orangeArrow from "../../assets/icons/orangeArrow.svg";
 import axios from "axios";
+import orangeArrow from "../../assets/icons/orangeArrow.svg";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
-import "./UserProfile.scss";
 import { UserComponentProps, Project } from "../../utils/interfaces";
 
 interface UserInfo {
@@ -106,8 +106,10 @@ export default function UserProfile({
 
 	// API CALLS FOR PROFILE INFORMATION
 	useEffect(() => {
-		console.log("INSIDE SECOND USE EFFECT");
+		setIsLoading(true);
 		checkToken();
+
+		// Fetch user name and id
 		const fetchUserProfile = async () => {
 			try {
 				const response = await axios.get(`${baseUrl}user/profile`, {
@@ -120,8 +122,6 @@ export default function UserProfile({
 					id: response.data.id,
 					name: response.data.name,
 				});
-				console.log("Fetch profile:", userInfo);
-				console.log(response);
 			} catch (error: any) {
 				setErrorMessage(
 					`There was an issue getting your profile: ${error.response.data.message}`
@@ -129,6 +129,7 @@ export default function UserProfile({
 			}
 		};
 
+		// Fetch saved prompts
 		const fetchPrompts = async () => {
 			try {
 				const response = await axios.get(`${baseUrl}user/prompts`, {
@@ -152,6 +153,7 @@ export default function UserProfile({
 			}
 		};
 
+		// Fetch saved ideas
 		const fetchIdeas = async () => {
 			try {
 				const response = await axios.get(`${baseUrl}user/ideas`, {
@@ -180,28 +182,16 @@ export default function UserProfile({
 		fetchUserProfile();
 		fetchPrompts();
 		fetchIdeas();
+		setIsLoading(false);
 	}, [token]);
 
-	if (isLoading) {
-		<Typewriter
-			options={options}
-			onInit={(typewriter: any) => {
-				loadingText.forEach(() => {
-					typewriter
-						.typeString(getRandomText())
-						.pauseFor(1500)
-						.deleteAll();
-				});
-				typewriter.start();
-			}}
-		/>;
-	}
-
+	// Navigate to idea details page with clicked idea
 	const handleClickIdea = (idea: Project) => {
 		setProjectIdea(idea);
 		navigate("/idea/details");
 	};
 
+	// Logout function to remove local and session storage items
 	const handleLogout = () => {
 		setState(false);
 		sessionStorage.removeItem("JWT token");
@@ -296,6 +286,27 @@ export default function UserProfile({
 			>
 				LOG OUT
 			</button>
+			{isLoading === true && (
+				<div
+					id="loading-modal"
+					className={`modal ${
+						isLoading === true ? "modal--show" : ""
+					}`}
+				>
+					<Typewriter
+						options={options}
+						onInit={(typewriter: any) => {
+							loadingText.forEach(() => {
+								typewriter
+									.typeString(getRandomText())
+									.pauseFor(500)
+									.deleteAll();
+							});
+							typewriter.start();
+						}}
+					/>
+				</div>
+			)}
 		</div>
 	);
 }
