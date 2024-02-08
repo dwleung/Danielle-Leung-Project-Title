@@ -113,7 +113,7 @@ export default function IdeaDetailsPage({
 				{interests?.length && skills?.length && (
 					<>
 						<div className="prompt">
-							<div className="prompt__box">
+							<div className="prompt__container">
 								<div className="prompt__wrapper">
 									<h4 className="prompt__subtitle">
 										Interests:

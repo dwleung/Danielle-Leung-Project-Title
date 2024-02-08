@@ -212,37 +212,41 @@ export default function UserProfile({
 					{interestsList && skillsList && (
 						<>
 							<div className="prompt">
-								<div className="prompt__wrapper">
-									<h4 className="prompt__subtitle">
-										Interests:
-									</h4>
-									{interestsList?.map(
-										(interest, i) => {
-											return (
-												<span
-													key={i}
-													className="prompt__item"
-												>
-													{interest}
-												</span>
-											);
-										}
-									)}
-								</div>
-								<div className="prompt__wrapper">
-									<h4 className="prompt__subtitle">
-										Skills:
-									</h4>
-									{skillsList?.map((skill, i) => {
-										return (
-											<span
-												key={i}
-												className="prompt__item"
-											>
-												{skill}
-											</span>
-										);
-									})}
+								<div className="prompt__container">
+									<div className="prompt__wrapper">
+										<h4 className="prompt__subtitle">
+											Interests:
+										</h4>
+										{interestsList?.map(
+											(interest, i) => {
+												return (
+													<span
+														key={i}
+														className="prompt__item"
+													>
+														{interest}
+													</span>
+												);
+											}
+										)}
+									</div>
+									<div className="prompt__wrapper">
+										<h4 className="prompt__subtitle">
+											Skills:
+										</h4>
+										{skillsList?.map(
+											(skill, i) => {
+												return (
+													<span
+														key={i}
+														className="prompt__item"
+													>
+														{skill}
+													</span>
+												);
+											}
+										)}
+									</div>
 								</div>
 							</div>
 						</>
