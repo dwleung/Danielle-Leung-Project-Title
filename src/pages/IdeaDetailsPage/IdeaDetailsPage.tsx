@@ -2,7 +2,6 @@ import "./IdeaDetailsPage.scss";
 import axios from "axios";
 import checkmark from "../../assets/icons/checkmark.svg";
 import orangeArrow from "../../assets/icons/orangeArrow.svg";
-import redo from "../../assets/icons/redo.svg";
 import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -22,7 +21,8 @@ export default function IdeaDetailsPage({
 }: detailsPageProps) {
 	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
-	const interests = localStorage.getItem("Interests");
+	// Retrieve the prompts that were just used
+	const interests = localStorage.getItem("Interests")?.split(",");
 	const skills = localStorage.getItem("Skills")?.split(",");
 	const toggles = localStorage.getItem("Toggles")?.split(",");
 	const token = sessionStorage.getItem("JWT token");
@@ -42,6 +42,7 @@ export default function IdeaDetailsPage({
 
 	// SAVE PROMPTS TO PROFILE
 	const savePrompts = async () => {
+		setSaveIdea(true);
 		//Navigate to login page if user has not logged in
 		if (!token) {
 			navigate("/user/login");
@@ -49,7 +50,10 @@ export default function IdeaDetailsPage({
 		}
 
 		try {
-			const response = await axios.post(
+			const interests = localStorage.getItem("Interests")?.split(",");
+			const skills = localStorage.getItem("Skills")?.split(",");
+			const toggles = localStorage.getItem("Toggles")?.split(",");
+			await axios.post(
 				`${baseUrl}user/prompts`,
 				{
 					interests: interests,
@@ -62,7 +66,7 @@ export default function IdeaDetailsPage({
 					},
 				}
 			);
-			console.log(response.data);
+			setIsButtonClicked(true);
 		} catch (error) {
 			console.log(`Unable to save prompts to user profile: ${error}`);
 		}
@@ -80,10 +84,9 @@ export default function IdeaDetailsPage({
 			return;
 		}
 
-		console.log("Project Idea: ", projectIdea);
 		// Send POST idea request to database, returns the posted idea
 		try {
-			const response = await axios.post(
+			await axios.post(
 				`${baseUrl}user/ideas`,
 				{
 					title: projectIdea.title,
@@ -96,7 +99,6 @@ export default function IdeaDetailsPage({
 					},
 				}
 			);
-			console.log(response.data);
 			setIsButtonClicked(true);
 		} catch (error) {
 			console.log(`Unable to save idea to user profile: ${error}`);
@@ -105,6 +107,66 @@ export default function IdeaDetailsPage({
 
 	return (
 		<section className="idea-details-page">
+			<div className="profile__container">
+				{interests?.length && skills?.length && (
+					<>
+						<div className="prompt">
+							<div className="prompt__box">
+								<div className="prompt__wrapper">
+									<h4 className="prompt__subtitle">
+										Interests:
+									</h4>
+									{interests?.map((interest, i) => {
+										return (
+											<p
+												key={i}
+												className="prompt__item"
+											>
+												{interest.trim()}
+											</p>
+										);
+									})}
+								</div>
+								<div className="prompt__wrapper">
+									<h4 className="prompt__subtitle">
+										Skills:
+									</h4>
+									{skills?.map((skill, i) => {
+										return (
+											<p
+												key={i}
+												className="prompt__item"
+											>
+												{skill.trim()}
+											</p>
+										);
+									})}
+									{toggles?.map((toggle, i) => {
+										return (
+											<p
+												key={i}
+												className="prompt__item"
+											>
+												{toggle.trim()}
+											</p>
+										);
+									})}
+								</div>
+							</div>
+							<img
+								className={`prompt__button button__save ${
+									isButtonClicked
+										? "button__save--disabled"
+										: ""
+								}`}
+								onClick={savePrompts}
+								src={checkmark}
+								alt="checkmark to save prompts"
+							/>
+						</div>
+					</>
+				)}
+			</div>
 			<div className="details">
 				<div className="details__wrapper details__wrapper--title">
 					<h3 className="details__title">{projectIdea.title}</h3>

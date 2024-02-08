@@ -22,7 +22,6 @@ export default function Signup({
 
 	const handleSignup = async (e: any) => {
 		e.preventDefault();
-
 		try {
 			const response = await axios.post(signupUrl, {
 				username: e.target.username.value,
@@ -31,8 +30,6 @@ export default function Signup({
 			});
 			setState(true);
 			setIsSignupError(false);
-			console.log("You've successfully signed up!");
-			console.log(response.data);
 			sessionStorage.setItem("JWT token", response.data.token);
 			setIsLoggedIn(true);
 			navigate("/user");

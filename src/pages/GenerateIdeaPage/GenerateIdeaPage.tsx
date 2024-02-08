@@ -71,8 +71,8 @@ export default function IdeaPage(props: IdeaPageProps) {
 	const getProjectIdea = async (e: any) => {
 		e.preventDefault();
 		savePrompts();
+		setIsLoading(true);
 		try {
-			console.log("chatHistory:", chatHistory);
 			// Add user request to chat history
 			const history = [
 				...chatHistory,
@@ -86,16 +86,11 @@ export default function IdeaPage(props: IdeaPageProps) {
 			const shortHistory =
 				history.length > 10 ? history.slice(-10) : history;
 
-			console.log("This is SHORT HISTORY:", shortHistory);
 			// Send API request with custom prompt & chat history
-
 			const response = await axios.post(
 				`${baseUrl}openai`,
 				shortHistory
 			);
-			setIsLoading(true);
-			console.log("isloading is true", isLoading);
-			console.log("This is the response: ", response);
 
 			// Update chat history with API response
 			setChatHistory([
@@ -105,15 +100,19 @@ export default function IdeaPage(props: IdeaPageProps) {
 					content: response.data.content,
 				},
 			]);
+
 			// Convert response to object for better rendering, and navigate to project details
 			setProjectIdea(JSON.parse(response.data.content));
-			setIsLoading(false);
 			navigate("/idea/details");
 		} catch (error) {
 			console.log(`Error generating new idea: ${error}`);
+		} finally {
+			// Set isLoading to false regardless of success or error
+			setIsLoading(false);
 		}
 	};
 
+	console.log("isLoading", isLoading);
 	return (
 		<div className="idea">
 			{isLoading === true && (
@@ -129,7 +128,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 							loadingText.forEach(() => {
 								typewriter
 									.typeString(getRandomText())
-									.pauseFor(1500)
+									.pauseFor(500)
 									.deleteAll();
 							});
 							typewriter.start();

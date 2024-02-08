@@ -26,6 +26,8 @@ Software developers:
 
 **View idea:** Logged in user can click on one of their saved ideas to view details
 
+**Save prompts:** Logged in user can save prompts used to deliver idea
+
 ## Implementation
 
 ### Tech Stack
@@ -83,47 +85,32 @@ Accessed via Nav, this component lists the user's saved ideas.
 
 _Sprint 1: Set foundation_
 
--    Create & finesse chatGPT prompt
--    Connect OpenAI API
--    Connect
--    Create basic react app
--    Create a database to hold user info & preferences
--    Create API to access user idea database
+-    Create form for user inputs
+-    Create user sign-in and login function
+-    Connect to backend API to generate ideas
+-    Manipulate API prompt for project idea to receive relevant responses
 
-_Sprint 2: Test API & database_
+_Sprint 2: Add features_
 
-     - Test prompt generation with React app
+-    Add ability to reuse prompts
+-    Add ability to request new idea with the same prompt, in the idea details page
+-    Add loading state modal
+-    Add new endpoint to delete ideas and prompts from profile
 
-_Feature: Idea Page_
+_Sprint 3: Add seed data and mockup_
 
-     - GET request to chatGPT
-
-_Feature: User sign up_
-
--    POST request for new user
--    Create sign up page & form
-
-_Feature: User log in_
-
--    POST request with user information
--    Implement auth with JWT token
--    Test edge cases
--    Create log in page & form
-
-_Feature: Save idea_
-
--    POST request to server
--    Create "My Ideas" page
+-    Request seed data if database is toggled ON in idea form
+-    Add new endpoint to image generation API to create desktop mockup
 
 ## Nice-to-haves
 
 **Future features:**
 
-**Generate mockup:** Use current idea to generate a desktop mockup, eliminating visual design paralysis
+Generate mockup: Use current idea to generate a desktop mockup, eliminating visual design paralysis
 
-**Edit idea:** Logged in user can edit saved ideas
+Edit idea: Logged in user can edit saved ideas
 
-**Add idea:** Logged in user can add their own idea to the list
+Add own idea: Logged in user can add their own idea to the list
 
 As a logged in user, I want to be able to generate a basic Readme file for my project
 

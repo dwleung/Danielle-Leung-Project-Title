@@ -38,6 +38,7 @@ const getRandomText = () => {
 
 const options = {
 	loop: true,
+	delay: 50,
 	cursor: "|",
 	wrapperClassName: "typewriter__loading-text",
 	cursorClassName: "typewriter__cursor",

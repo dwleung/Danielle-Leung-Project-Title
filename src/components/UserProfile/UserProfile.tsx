@@ -42,14 +42,10 @@ export default function UserProfile({
 		return null;
 	};
 
+	// Send API Post call if user requested to save idea before login
 	useEffect(() => {
-		console.log("Want to save idea:", saveIdea);
-		if (saveIdea === true) {
-			console.log("inside Save Idea");
-			console.log(ideaList[0]);
-
+		if (saveIdea === true && ideaList.length > 0) {
 			const saveIdea = async () => {
-				console.log("INSIDE THE SAVE IDEA FUNCTION");
 				try {
 					const response = await axios.post(
 						`${baseUrl}user/ideas`,
@@ -75,8 +71,36 @@ export default function UserProfile({
 					);
 				}
 			};
-			console.log("Calling save idea");
 			saveIdea();
+		} else {
+			const postPrompts = async () => {
+				const interests = localStorage
+					.getItem("Interests")
+					?.split(",");
+				const skills = localStorage.getItem("Skills")?.split(",");
+				const toggles = localStorage.getItem("Toggles")?.split(",");
+
+				try {
+					await axios.post(
+						`${baseUrl}user/prompts`,
+						{
+							interests: interests,
+							skills: skills,
+							toggles: toggles,
+						},
+						{
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
+				} catch (error) {
+					console.log(
+						`Unable to save prompts to user profile: ${error}`
+					);
+				}
+				postPrompts();
+			};
 		}
 	}, []);
 
@@ -96,6 +120,8 @@ export default function UserProfile({
 					id: response.data.id,
 					name: response.data.name,
 				});
+				console.log("Fetch profile:", userInfo);
+				console.log(response);
 			} catch (error: any) {
 				setErrorMessage(
 					`There was an issue getting your profile: ${error.response.data.message}`
@@ -118,7 +144,6 @@ export default function UserProfile({
 					const toggles = element.toggles.split(",");
 					skills.push(toggles);
 					setSkillsList(skills);
-					console.log(skills);
 				});
 			} catch (error: any) {
 				setErrorMessage(
@@ -201,25 +226,27 @@ export default function UserProfile({
 									<h4 className="prompt__subtitle">
 										Interests:
 									</h4>
-									{interestsList?.map((interest) => {
-										return (
-											<span
-												key={Math.random()}
-												className="prompt__item"
-											>
-												{interest}
-											</span>
-										);
-									})}
+									{interestsList?.map(
+										(interest, i) => {
+											return (
+												<span
+													key={i}
+													className="prompt__item"
+												>
+													{interest}
+												</span>
+											);
+										}
+									)}
 								</div>
 								<div className="prompt__wrapper">
 									<h4 className="prompt__subtitle">
 										Skills:
 									</h4>
-									{skillsList?.map((skill) => {
+									{skillsList?.map((skill, i) => {
 										return (
 											<span
-												key={Math.random()}
+												key={i}
 												className="prompt__item"
 											>
 												{skill}

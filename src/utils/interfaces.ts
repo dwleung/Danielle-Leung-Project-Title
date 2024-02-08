@@ -20,8 +20,4 @@ interface UserComponentProps {
 	setSaveIdea: (arg0: boolean) => void;
 }
 
-interface IdeaValues {
-	[key: string]: string | string[] | undefined;
-}
-
 export type { Project, UserComponentProps, UserInfo };

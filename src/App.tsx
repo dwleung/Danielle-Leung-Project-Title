@@ -13,6 +13,7 @@ import Signup from "./components/Signup/Signup";
 import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
+	const baseUrl: string | undefined = process.env.REACT_APP_API_URL;
 	// PROJECT IDEA RESULT
 	const [projectIdea, setProjectIdea] = useState<Project>({
 		id: "",
@@ -20,8 +21,6 @@ function App() {
 		description: "",
 		requirements: [],
 	});
-	const baseUrl: string | undefined = process.env.REACT_APP_API_URL;
-
 	const [isSignedUp, setIsSignedUp] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [chatHistory, setChatHistory] = useState<object[]>([]);

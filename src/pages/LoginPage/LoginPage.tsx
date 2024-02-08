@@ -1,9 +1,8 @@
 import "./LoginPage.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserForm from "../../components/UserForm/UserForm";
 import axios from "axios";
-import { useState } from "react";
 
 interface UserPageProps {
 	baseUrl: string | undefined;
@@ -35,14 +34,12 @@ export default function LoginPage({
 		try {
 			const response = await axios.post(loginUrl, {
 				username: e.target.username.value,
-				// bcrypt hash
 				password: e.target.password.value,
 			});
 			sessionStorage.setItem("JWT token", response.data.token);
 			setIsLoggedIn(true);
 			setIsLoginError(false);
 			setErrorMessage("");
-			console.log("You've successfully logged in!");
 			navigate("/user");
 		} catch (error: any) {
 			console.log(error);
