@@ -153,6 +153,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 						value={interests}
 						placeholder="Interests"
 						onChange={handlechangeInterests}
+						autoComplete="off"
 					/>
 				</div>
 				<div className="idea__input-wrapper">
@@ -171,6 +172,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 						placeholder="Skills"
 						onChange={handleChangeSkills}
 						className="input idea__input"
+						autoComplete="off"
 					></input>
 				</div>
 				<div className="toggle">

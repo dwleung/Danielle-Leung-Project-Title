@@ -109,6 +109,7 @@ export default function UserForm(props: FormProps) {
 							className={`input form__input ${inputClassName(
 								"name"
 							)}`}
+							autoComplete="off"
 							type="text"
 							name="name"
 							value={values.name}
@@ -135,6 +136,7 @@ export default function UserForm(props: FormProps) {
 						className={`input form__input ${inputClassName(
 							"username"
 						)}`}
+						autoComplete="off"
 						type="text"
 						name="username"
 						value={values.username}
