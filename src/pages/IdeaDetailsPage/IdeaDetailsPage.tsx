@@ -55,12 +55,17 @@ export default function IdeaDetailsPage({
 			const interests = localStorage.getItem("Interests")?.split(",");
 			const skills = localStorage.getItem("Skills")?.split(",");
 			const toggles = localStorage.getItem("Toggles")?.split(",");
+
+			const interestString = interests?.join(",");
+			const skillString = skills?.join(",");
+			const toggleString = toggles?.join(",");
+
 			await axios.post(
 				`${baseUrl}user/prompts`,
 				{
-					interests: interests,
-					skills: skills,
-					toggles: toggles,
+					interests: interestString,
+					skills: skillString,
+					toggles: toggleString,
 				},
 				{
 					headers: {

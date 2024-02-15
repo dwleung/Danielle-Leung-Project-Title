@@ -144,7 +144,6 @@ export default function UserForm(props: FormProps) {
 						onChange={handleChange}
 						onFocus={() => handleFocus("username")}
 						placeholder="Enter a username"
-						required
 					/>
 				</>
 				<>
@@ -170,7 +169,6 @@ export default function UserForm(props: FormProps) {
 						onChange={handleChange}
 						onFocus={() => handleFocus("password")}
 						placeholder="Enter a password"
-						required
 					/>
 				</>
 				{props.isSignUpForm && (
@@ -199,7 +197,6 @@ export default function UserForm(props: FormProps) {
 							onChange={handleChange}
 							onFocus={() => handleFocus("passwordRepeat")}
 							placeholder="Re-enter password"
-							required
 						/>
 					</>
 				)}

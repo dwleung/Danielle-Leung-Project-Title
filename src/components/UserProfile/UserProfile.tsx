@@ -143,7 +143,9 @@ export default function UserProfile({
 					setInterestsList(interests);
 					const skills = element.skills.split(",");
 					const toggles = element.toggles.split(",");
-					skills.push(toggles);
+					toggles.forEach((element: any) => {
+						skills.push(element);
+					});
 					setSkillsList(skills);
 				});
 			} catch (error: any) {
@@ -235,12 +237,12 @@ export default function UserProfile({
 									</h4>
 									{skillsList?.map((skill, i) => {
 										return (
-											<span
+											<p
 												key={i}
 												className="prompt__item"
 											>
 												{skill}
-											</span>
+											</p>
 										);
 									})}
 								</div>
