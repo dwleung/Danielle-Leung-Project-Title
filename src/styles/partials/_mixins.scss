@@ -1,0 +1,36 @@
+@use "./variables" as *;
+
+// MEDIA QUERIES
+@mixin tablet {
+	@media screen and (min-width: 768px) {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@media screen and (min-width: 1020px) {
+		@content;
+	}
+}
+
+// CONTENT WIDTH CONTAINER
+@mixin content-width {
+	@include desktop {
+		max-width: 63.75rem;
+		margin: 0 auto;
+	}
+}
+
+// PAGE TITLES
+@mixin page-title {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: $primary-dark;
+	padding: 1rem 0;
+	border-bottom: 0.2rem solid $primary-accessory;
+
+	@include tablet {
+		font-size: 2rem;
+		padding: 2rem 0 1.5rem;
+	}
+}

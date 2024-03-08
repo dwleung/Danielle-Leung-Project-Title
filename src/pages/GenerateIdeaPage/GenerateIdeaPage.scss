@@ -1,0 +1,84 @@
+@use "../../styles/partials/global" as *;
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+
+.idea {
+	padding: 5rem 1rem 1rem 1rem;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	@include content-width;
+
+	@include tablet {
+		margin: 0 auto;
+	}
+
+	@include desktop {
+		height: 100%;
+	}
+
+	&__title {
+		@include page-title;
+		@include tablet {
+			margin: 0 1rem;
+		}
+	}
+
+	&__container {
+		display: flex;
+		align-items: center;
+	}
+
+	&__button {
+		width: 4rem;
+		height: 4rem;
+		margin-top: auto;
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		height: 100%;
+		margin: 1rem auto;
+	}
+
+	&__input-wrapper {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__input-prompt {
+		font-size: 0.75rem;
+		color: $primary-dark;
+		font-weight: 700;
+
+		@include tablet {
+			font-size: 1rem;
+		}
+	}
+
+	&__input-subtitle {
+		font-size: 0.75rem;
+		color: $primary-dark;
+	}
+
+	&__input {
+		margin-bottom: 1rem;
+		color: $primary-dark;
+		margin-top: 0.75rem;
+	}
+}
+.toggle {
+	margin-bottom: 1rem;
+	&__wrapper {
+		display: flex;
+	}
+
+	&__name {
+		margin-left: 0.5rem;
+	}
+}
