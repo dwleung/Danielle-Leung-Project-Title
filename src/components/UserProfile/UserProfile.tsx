@@ -33,7 +33,7 @@ export default function UserProfile({
 		id: undefined,
 		name: "",
 	});
-	const [showModal, setShowModal] = useState<boolean>(false);
+	// const [showModal, setShowModal] = useState<boolean>(false);
 	//NAVIGATION
 	const navigate = useNavigate();
 
@@ -184,7 +184,7 @@ export default function UserProfile({
 		fetchPrompts();
 		fetchIdeas();
 		setIsLoading(false);
-		setShowModal(true);
+		// setShowModal(true);
 	}, [token]);
 
 	// Navigate to idea details page with clicked idea
@@ -317,7 +317,7 @@ export default function UserProfile({
 					/>
 				</div>
 			)}
-			{showModal && 
+			{/* {showModal && 
 				(
 					<div id="save-modal" className="modal modal--save">
 						console.log("Modal has been called")
@@ -332,7 +332,7 @@ export default function UserProfile({
 						</div>
 					</div>
 				)
-			}
+			} */}
 		</div>
 	);
 }
