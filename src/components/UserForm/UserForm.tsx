@@ -89,7 +89,7 @@ export default function UserForm(props: FormProps) {
 
 	return (
 		<div className="form-main">
-			<form className="form" onSubmit={props.onSubmitFn}>
+			<form className="form" autoComplete="off" onSubmit={props.onSubmitFn}>
 				{props.isSignUpForm && (
 					<>
 						<div className="form__label-wrapper">
@@ -116,6 +116,7 @@ export default function UserForm(props: FormProps) {
 							onChange={handleChange}
 							onFocus={() => handleFocus("name")}
 							placeholder="Enter a name"
+							autoComplete="off"
 							required
 						/>
 					</>
@@ -142,6 +143,7 @@ export default function UserForm(props: FormProps) {
 						onChange={handleChange}
 						onFocus={() => handleFocus("username")}
 						placeholder="Enter a username"
+						autoComplete="off"
 						required
 					/>
 				</>

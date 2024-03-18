@@ -5,19 +5,18 @@ import orangeArrow from "../../assets/icons/orangeArrow.svg";
 import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { postIdeaToDB } from "utils/API";
 
 interface detailsPageProps {
 	projectIdea: Project;
 	baseUrl: string | undefined;
-	setIdeaList: React.Dispatch<React.SetStateAction<Project[]>>;
-	setSaveIdea: (arg0: boolean) => void;
+	setSaveIdeaOnLogin: (arg0: boolean) => void;
 }
 
 export default function IdeaDetailsPage({
 	projectIdea,
 	baseUrl,
-	setIdeaList,
-	setSaveIdea,
+	setSaveIdeaOnLogin,
 }: detailsPageProps) {
 	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
@@ -43,7 +42,7 @@ export default function IdeaDetailsPage({
 
 	// SAVE PROMPTS TO PROFILE
 	const savePrompts = async () => {
-		setSaveIdea(true);
+		setSaveIdeaOnLogin(true);
 
 		//Navigate to login page if user has not logged in
 		if (!token) {
@@ -74,11 +73,11 @@ export default function IdeaDetailsPage({
 		}
 	};
 
-	//SAVE IDEAS TO PROFILE
-	//adds the current idea to state, in order to be retrieved when user logs in
-	const saveIdeas = async () => {
-		setSaveIdea(true);
-		setIdeaList([projectIdea]);
+	//SAVE IDEA TO PROFILE
+
+	const saveIdeaToProfile = async () => {
+		setSaveIdeaOnLogin(true);
+		console.log("inside saveIdeas in idea details page")
 
 		// Navigate user to login page if not logged in
 		if (!token) {
@@ -87,24 +86,12 @@ export default function IdeaDetailsPage({
 		}
 
 		// Send POST idea request to database, returns the posted idea
-		try {
-			await axios.post(
-				`${baseUrl}user/ideas`,
-				{
-					title: projectIdea.title,
-					description: projectIdea.description,
-					requirements: projectIdea.requirements,
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-			setIsButtonClicked(true);
-		} catch (error) {
-			console.log(`Unable to save idea to user profile: ${error}`);
+		const successCallback = () => {
+			setIsButtonClicked(true)
 		}
+		
+		postIdeaToDB({baseUrl: baseUrl, projectIdea: projectIdea, successCallback: successCallback, token: token});
+
 	};
 
 	return (
@@ -215,7 +202,7 @@ export default function IdeaDetailsPage({
 					className={`button__save ${
 						isButtonClicked ? "button__save--disabled" : ""
 					}`}
-					onClick={saveIdeas}
+					onClick={saveIdeaToProfile}
 					src={checkmark}
 					alt="checkmark to save"
 				/>

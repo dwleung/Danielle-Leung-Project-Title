@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Project } from "../../utils/interfaces";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 interface IdeaPageProps {
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
@@ -92,6 +93,20 @@ export default function IdeaPage(props: IdeaPageProps) {
 				shortHistory
 			);
 
+			console.log("response.data from API response:", response.data)
+			// Add unique identifier to the API response
+			const parsedData=JSON.parse(response.data.content)
+			console.log("parsedData:", parsedData)
+
+			const projectIdea = {
+				idea_id: uuidv4(),
+				title: parsedData.title,
+				description: parsedData.description,
+				requirements: parsedData.requirements
+			}
+
+			console.log(projectIdea);
+
 			// Update chat history with API response
 			setChatHistory([
 				...shortHistory,
@@ -102,7 +117,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 			]);
 
 			// Convert response to object for better rendering, and navigate to project details
-			setProjectIdea(JSON.parse(response.data.content));
+			setProjectIdea(projectIdea);
 			navigate("/idea/details");
 		} catch (error) {
 			console.log(`Error generating new idea: ${error}`);
@@ -136,7 +151,7 @@ export default function IdeaPage(props: IdeaPageProps) {
 				</div>
 			)}
 			<h2 className="idea__title">IDEA</h2>
-			<form className="idea__form">
+			<form className="idea__form" autoComplete="off">
 				<div className="idea__input-wrapper">
 					<p className="idea__input-prompt">
 						What are some things that interest you?{" "}

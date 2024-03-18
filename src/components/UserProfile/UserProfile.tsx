@@ -6,6 +6,7 @@ import orangeArrow from "../../assets/icons/orangeArrow.svg";
 import Typewriter from "typewriter-effect";
 import { getRandomText, loadingText, options } from "../../utils/typewriter";
 import { UserComponentProps, Project } from "../../utils/interfaces";
+import { postIdeaToDB } from "utils/API";
 
 interface UserInfo {
 	id: number | undefined;
@@ -17,10 +18,12 @@ export default function UserProfile({
 	setState,
 	ideaList,
 	setIdeaList,
-	saveIdea,
+	saveIdeaOnLogin,
+	projectIdea,
 	setProjectIdea,
-	setSaveIdea,
+	setSaveIdeaOnLogin,
 }: UserComponentProps) {
+
 	// STATE VARIABLES
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
@@ -30,6 +33,7 @@ export default function UserProfile({
 		id: undefined,
 		name: "",
 	});
+	const [showModal, setShowModal] = useState<boolean>(false);
 	//NAVIGATION
 	const navigate = useNavigate();
 
@@ -43,66 +47,71 @@ export default function UserProfile({
 	};
 
 	// Send API Post call if user requested to save idea before login
-	useEffect(() => {
-		if (saveIdea === true && ideaList.length > 0) {
-			const saveIdea = async () => {
-				try {
-					const response = await axios.post(
-						`${baseUrl}user/ideas`,
-						{
-							title: ideaList[0].title,
-							description: ideaList[0].description,
-							requirements: ideaList[0].requirements,
-						},
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-							},
-						}
-					);
-					setSaveIdea(false);
-					return console.log(
-						"Save Idea response data",
-						response
-					);
-				} catch (error) {
-					setErrorMessage(
-						`Unable to save idea to user profile: ${error}`
-					);
-				}
-			};
-			saveIdea();
-		} else {
-			const postPrompts = async () => {
-				const interests = localStorage
-					.getItem("Interests")
-					?.split(",");
-				const skills = localStorage.getItem("Skills")?.split(",");
-				const toggles = localStorage.getItem("Toggles")?.split(",");
+	// useEffect(() => {
+	// 	if (saveIdeaOnLogin && projectIdea) {
 
-				try {
-					await axios.post(
-						`${baseUrl}user/prompts`,
-						{
-							interests: interests,
-							skills: skills,
-							toggles: toggles,
-						},
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-							},
-						}
-					);
-				} catch (error) {
-					console.log(
-						`Unable to save prompts to user profile: ${error}`
-					);
-				}
-				postPrompts();
-			};
-		}
-	}, []);
+	// 		const successCallback = (response: Project) => {
+	// 			setSaveIdeaOnLogin(false);
+	// 				return console.log(
+	// 					"Save Idea response data",
+	// 					response
+	// 				);
+	// 		}
+	// 		const saveIdea = async () => {
+	// 			try {
+	// 				const response = await axios.post(
+	// 					`${baseUrl}user/ideas`,
+	// 					{
+	// 						idea_id: projectIdea.idea_id,
+	// 						title: projectIdea.title,
+	// 						description: projectIdea.description,
+	// 						requirements: projectIdea.requirements,
+	// 					},
+	// 					{
+	// 						headers: {
+	// 							Authorization: `Bearer ${token}`,
+	// 						},
+	// 					}
+	// 				);
+					
+	// 			} catch (error) {
+	// 				setErrorMessage(
+	// 					`Unable to save idea to user profile: ${error}`
+	// 				);
+	// 			}
+	// 		};
+	// 		saveIdea();
+	// 	} else {
+	// 		const postPrompts = async () => {
+	// 			const interests = localStorage
+	// 				.getItem("Interests")
+	// 				?.split(",");
+	// 			const skills = localStorage.getItem("Skills")?.split(",");
+	// 			const toggles = localStorage.getItem("Toggles")?.split(",");
+
+	// 			try {
+	// 				await axios.post(
+	// 					`${baseUrl}user/prompts`,
+	// 					{
+	// 						interests: interests,
+	// 						skills: skills,
+	// 						toggles: toggles,
+	// 					},
+	// 					{
+	// 						headers: {
+	// 							Authorization: `Bearer ${token}`,
+	// 						},
+	// 					}
+	// 				);
+	// 			} catch (error) {
+	// 				console.log(
+	// 					`Unable to save prompts to user profile: ${error}`
+	// 				);
+	// 			}
+	// 			postPrompts();
+	// 		};
+	// 	}
+	// }, []);
 
 	// API CALLS FOR PROFILE INFORMATION
 	useEffect(() => {
@@ -123,8 +132,9 @@ export default function UserProfile({
 					name: response.data.name,
 				});
 			} catch (error: any) {
+				console.log(error);
 				setErrorMessage(
-					`There was an issue getting your profile: ${error.response.data.message}`
+					`There was an issue getting your profile: ${error.message}`
 				);
 			}
 		};
@@ -162,19 +172,10 @@ export default function UserProfile({
 					},
 				});
 				const ideas = response.data;
-
-				// Parse "requirements" which is stored as string in database
-				ideas.forEach((idea: any) => {
-					{
-						idea.requirements = JSON.parse(
-							idea.requirements.split(",")
-						);
-					}
-				});
 				setIdeaList(ideas);
 			} catch (error: any) {
 				setErrorMessage(
-					`There was an issue getting your saved ideas: ${error.response.data.message}`
+					`There was an issue getting your saved ideas: ${error}`
 				);
 			}
 		};
@@ -183,6 +184,7 @@ export default function UserProfile({
 		fetchPrompts();
 		fetchIdeas();
 		setIsLoading(false);
+		setShowModal(true);
 	}, [token]);
 
 	// Navigate to idea details page with clicked idea
@@ -200,6 +202,14 @@ export default function UserProfile({
 		localStorage.removeItem("Toggles");
 		navigate("/");
 	};
+
+	// Send POST idea request to database, returns the posted idea
+	const saveIdeatoProfile = () =>{
+		const successCallback = () => {
+			navigate("/user");
+		}
+		postIdeaToDB({baseUrl: baseUrl, projectIdea: projectIdea, successCallback: successCallback, token: token});
+	}
 
 	return (
 		<div className="profile">
@@ -261,7 +271,7 @@ export default function UserProfile({
 					{ideaList.map((idea) => {
 						return (
 							<div
-								key={idea.id}
+								key={idea.idea_id}
 								className="profile__idea-wrapper"
 							>
 								<p className="profile__idea">
@@ -307,6 +317,22 @@ export default function UserProfile({
 					/>
 				</div>
 			)}
+			{showModal && 
+				(
+					<div id="save-modal" className="modal modal--save">
+						console.log("Modal has been called")
+						<div>
+							<div>Save project idea</div>
+							<div>Would you like to save the project idea
+								{projectIdea.title}? 
+							</div>
+							<div>
+								<button className="button" onClick={saveIdeatoProfile}>Save</button>
+							</div>
+						</div>
+					</div>
+				)
+			}
 		</div>
 	);
 }

@@ -15,7 +15,7 @@ function App() {
 	const baseUrl: string | undefined = process.env.REACT_APP_API_URL;
 	// PROJECT IDEA RESULT
 	const [projectIdea, setProjectIdea] = useState<Project>({
-		id: "",
+		idea_id: "",
 		title: "",
 		description: "",
 		requirements: [],
@@ -24,7 +24,7 @@ function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [chatHistory, setChatHistory] = useState<object[]>([]);
 	const [ideaList, setIdeaList] = useState<Project[]>([]);
-	const [saveIdea, setSaveIdea] = useState(false);
+	const [saveIdeaOnLogin, setSaveIdeaOnLogin] = useState(false);
 
 	return (
 		<BrowserRouter>
@@ -49,8 +49,7 @@ function App() {
 							<IdeaDetailsPage
 								projectIdea={projectIdea}
 								baseUrl={baseUrl}
-								setIdeaList={setIdeaList}
-								setSaveIdea={setSaveIdea}
+								setSaveIdeaOnLogin={setSaveIdeaOnLogin}
 							/>
 						}
 					/>
@@ -84,8 +83,9 @@ function App() {
 								setState={setIsLoggedIn}
 								ideaList={ideaList}
 								setIdeaList={setIdeaList}
-								saveIdea={saveIdea}
-								setSaveIdea={setSaveIdea}
+								saveIdeaOnLogin={saveIdeaOnLogin}
+								setSaveIdeaOnLogin={setSaveIdeaOnLogin}
+								projectIdea={projectIdea}
 								setProjectIdea={setProjectIdea}
 							/>
 						}

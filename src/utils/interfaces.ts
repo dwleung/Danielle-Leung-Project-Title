@@ -1,5 +1,5 @@
 interface Project {
-	id: string;
+	idea_id: string;
 	title: string;
 	description: string;
 	requirements: string[];
@@ -15,9 +15,10 @@ interface UserComponentProps {
 	setState: React.Dispatch<React.SetStateAction<boolean>>;
 	ideaList: Project[];
 	setIdeaList: React.Dispatch<React.SetStateAction<Project[]>>;
-	saveIdea: boolean;
+	saveIdeaOnLogin: boolean;
 	setProjectIdea: React.Dispatch<React.SetStateAction<Project>>;
-	setSaveIdea: (arg0: boolean) => void;
+	projectIdea: Project;
+	setSaveIdeaOnLogin: (arg0: boolean) => void;
 }
 
 export type { Project, UserComponentProps, UserInfo };

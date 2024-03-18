@@ -15,7 +15,7 @@ export default function Header() {
 						<li>Home</li>
 					</NavLink>
 					<NavLink
-						to="/user/login"
+						to="/user"
 						className="nav__link"
 					>
 						<li>Profile</li>
